@@ -25,7 +25,7 @@ const SignIn = () => {
             const token = data.token.token;
             localStorage.setItem('token', token);
             console.log(data)
-            navigate('/home');
+            navigate('/');
 
         } catch (e) {
             setHasError(true);

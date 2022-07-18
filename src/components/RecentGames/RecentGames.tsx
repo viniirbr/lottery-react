@@ -3,14 +3,13 @@ import Button from 'components/UI/Button/Button';
 import { useEffect, useState } from 'react'
 import Bet from 'types/Bet'
 import Game from 'types/Game';
-import BetItem from './GamesList/BetItem/BetItem';
 import BetsList from './GamesList/BetsList';
 import RecentGamesWrapper from './RecentGamesWrapper'
 
 function RecentGames() {
 
-  //const [gameTypes, setGameTypes] = useState<string[]>();
-  const [bets, setBets] = useState<Bet[]>();
+  const [bets, setBets] = useState<Bet[]>([]);
+  const [filter, setFilter] = useState<string>('')
 
   useEffect(() => {
 
@@ -46,7 +45,20 @@ function RecentGames() {
     return array.indexOf(game) === index
   });
   console.log(games)
-  const filterButtons = games?.map(({ type, color, id }) => <Button title={type} themeColor={color} key={id}/>);
+
+  const addFilter = (type: string) => {
+    if (filter === type) {
+      setFilter('');
+    } else {
+      setFilter(type);
+    }
+  }
+
+  console.log(filter)
+
+  const filterButtons = games?.map(({ type, color, id }) =>
+    <Button title={type} themeColor={color} key={id} onClick={addFilter} filter={filter}/>);
+
 
   return (
     <RecentGamesWrapper>
@@ -56,8 +68,13 @@ function RecentGames() {
           <p>Filters</p>
           {filterButtons}
         </div>
-        <BetsList bets={bets}/>
       </header>
+      <BetsList bets={bets} filterBets={filter} />
+      <Button
+        title='New Bet'
+        themeColor='#B5C401'
+        styles={{ position: 'fixed', bottom: '30px', right: '30px' }}
+        onClick={addFilter} />
 
     </RecentGamesWrapper>
   )

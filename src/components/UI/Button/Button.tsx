@@ -1,11 +1,25 @@
+import { useState } from "react"
+import { CSSProperties } from "styled-components"
+import ButtonWrapper from "./ButtonWrapper"
+
 interface Props {
-    title: string,
-    themeColor?: string
+  title: string,
+  themeColor?: string,
+  styles?: CSSProperties,
+  filter?: string,
+  onClick: (type: string) => void
 }
 
-function Button({ title, themeColor }: Props) {
+function Button({ title, themeColor, styles, onClick, filter }: Props) {
+
   return (
-    <button style={{border:`1px solid ${themeColor}`}}>{title}</button>
+    <ButtonWrapper
+      themeColor={themeColor}
+      styles={styles}
+      active={filter === title}
+      onClick={() => onClick(title)}>
+      {title}
+    </ButtonWrapper>
   )
 }
 
