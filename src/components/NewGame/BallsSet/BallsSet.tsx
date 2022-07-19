@@ -1,17 +1,30 @@
+import Ball from "./Ball/Ball";
+import BallSetWrapper from "./BallSetWrapper";
+
 interface Props {
-    ballsCount: number
+    ballsCount: number,
+    themeColor?: string,
+    ballsSelected: string[],
+    onBallClicked: (ball: string) => void
 }
 
-function BallsSet({ ballsCount }: Props) {
+function BallsSet({ ballsCount, themeColor, onBallClicked, ballsSelected }: Props) {
 
-    const balls:JSX.Element[] = [];
+    const balls: JSX.Element[] = [];
 
-    for (let i=1; i<=ballsCount; i++) {
-        balls.push(<p key={i}>{i}</p>)
+    for (let i = 1; i <= ballsCount; i++) {
+        balls.push(
+            <Ball
+                ballsSelected={ballsSelected}
+                key={i}
+                color={themeColor}
+                onBallClicked={onBallClicked}>
+                {i.toString()}
+            </Ball>)
     }
 
     return (
-        <div>{balls}</div>
+        <BallSetWrapper>{balls}</BallSetWrapper>
     )
 }
 
