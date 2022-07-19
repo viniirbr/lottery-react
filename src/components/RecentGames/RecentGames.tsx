@@ -2,6 +2,7 @@ import { axiosBase } from 'api/AxiosConfig'
 import Button from 'components/UI/Button/Button';
 import { useEffect, useState } from 'react'
 import Bet from 'types/Bet'
+import { Link } from 'react-router-dom'
 import Game from 'types/Game';
 import BetsList from './GamesList/BetsList';
 import RecentGamesWrapper from './RecentGamesWrapper'
@@ -18,12 +19,12 @@ function RecentGames() {
       const [betsResponse, gamesResponse] = await Promise.all([
         axiosBase.get<Bet[]>('/bet/all-bets', {
           headers: {
-            "Authorization": "Bearer MTg.vIjXPxdpyVLhnwurMDKdx70Dm2K77WOeH2B2PQO7XtHZ-J0ugimEm8CiGpg5"
+            "Authorization": "Bearer MjI.SgPDH_OsFGp5gB60CePfOrjlEvAfk-jNKAbv4EW8deQUgr-Hb-XvidxCFrdr"
           }
         }),
         axiosBase.get<{ min_cart_value: number, types: Game[] }>('/cart_games', {
           headers: {
-            "Authorization": "Bearer MTg.vIjXPxdpyVLhnwurMDKdx70Dm2K77WOeH2B2PQO7XtHZ-J0ugimEm8CiGpg5"
+            "Authorization": "Bearer MjI.SgPDH_OsFGp5gB60CePfOrjlEvAfk-jNKAbv4EW8deQUgr-Hb-XvidxCFrdr"
           }
         })
       ]);
@@ -44,7 +45,6 @@ function RecentGames() {
   const games = gameTypesWithDuplicates?.filter((game, index, array) => {
     return array.indexOf(game) === index
   });
-  console.log(games)
 
   const addFilter = (type: string) => {
     if (filter === type) {
@@ -54,10 +54,14 @@ function RecentGames() {
     }
   }
 
-  console.log(filter)
 
   const filterButtons = games?.map(({ type, color, id }) =>
-    <Button title={type} themeColor={color} key={id} onClick={addFilter} filter={filter}/>);
+    <Button
+      key={id}
+      title={type}
+      themeColor={color}
+      attributes={{ onClick: () => addFilter(type) }}
+      selected={filter} />);
 
 
   return (
@@ -70,11 +74,12 @@ function RecentGames() {
         </div>
       </header>
       <BetsList bets={bets} filterBets={filter} />
-      <Button
-        title='New Bet'
-        themeColor='#B5C401'
-        styles={{ position: 'fixed', bottom: '30px', right: '30px' }}
-        onClick={addFilter} />
+      <Link to='/new-game'>
+        <Button
+          title='New Bet'
+          themeColor='#B5C401'
+          styles={{ position: 'fixed', bottom: '30px', right: '30px' }} />
+      </Link>
 
     </RecentGamesWrapper>
   )
