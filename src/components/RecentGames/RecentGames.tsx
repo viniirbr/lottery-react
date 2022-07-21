@@ -58,10 +58,11 @@ function RecentGames() {
   const filterButtons = games?.map(({ type, color, id }) =>
     <Button
       key={id}
-      title={type}
       themeColor={color}
       attributes={{ onClick: () => addFilter(type) }}
-      selected={filter} />);
+      selected={filter}>
+      {type}
+    </Button>);
 
 
   return (
@@ -76,9 +77,10 @@ function RecentGames() {
       <BetsList bets={bets} filterBets={filter} />
       <Link to='/new-game'>
         <Button
-          title='New Bet'
           themeColor='#B5C401'
-          styles={{ position: 'fixed', bottom: '30px', right: '30px' }} />
+          styles={{ position: 'fixed', bottom: '30px', right: '30px' }}>
+          New Bet
+        </Button>
       </Link>
 
     </RecentGamesWrapper>

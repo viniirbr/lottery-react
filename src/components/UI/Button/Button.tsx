@@ -1,25 +1,25 @@
-import { ButtonHTMLAttributes, HTMLAttributes, useState } from "react"
+import { ButtonHTMLAttributes, HTMLAttributes, ReactNode, useState } from "react"
 import { CSSProperties } from "styled-components"
 import ButtonWrapper from "./ButtonWrapper"
 
 interface Props {
-  title: string,
+  children: ReactNode,
   themeColor?: string,
   styles?: CSSProperties,
-  selected?: string,
+  selected?: string | boolean,
   attributes?: ButtonHTMLAttributes<HTMLButtonElement>
 }
 
-function Button({ title, themeColor, styles, selected, attributes }: Props) {
+function Button({ children, themeColor, styles, selected, attributes }: Props) {
 
   return (
     <ButtonWrapper
       themeColor={themeColor}
       styles={styles}
-      active={selected === title}
+      active={selected === children || selected == true}
       {...attributes}
     >
-      {title}
+      {children}
     </ButtonWrapper>
   )
 }

@@ -24,7 +24,7 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
     if (indexOfCurrentGame !== -1) {
       state.incompleteBets.splice(indexOfCurrentGame, 1);
     }
-    
+
     if (state.currentBet?.game !== undefined) {
       state.incompleteBets.push(state.currentBet as CurrentBet);
     }
@@ -53,13 +53,20 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
     } else if (numbersSelected?.length as number < parseInt(currentBetGame?.max_number as string)) {
       state.currentBet?.numbersSelected.push(action.payload as string);
     } else {
-      window.alert(`Vocês já selecionou ${currentBetGame?.max_number} números, quantidade máxima para o`+ 
-      ` jogo ${currentBetGame?.type}.`)
+      window.alert(`Vocês já selecionou ${currentBetGame?.max_number} números, quantidade máxima para o` +
+        ` jogo ${currentBetGame?.type}.`)
     }
     return ({
       currentBet: state.currentBet,
       incompleteBets: state.incompleteBets
     })
+  }
+
+  if (action.type === 'CLEAR') {
+    return {
+      currentBet: { game: state.currentBet?.game, numbersSelected: [] },
+      incompleteBets: state.incompleteBets
+    }
   }
 
   return {
@@ -107,10 +114,11 @@ const NewGame = () => {
           {gamesAvailable.map((game, id) =>
             <Button
               key={id}
-              title={game.type}
               themeColor={game.color}
               attributes={{ onClick: () => handleGameTypeButtonClick(game) }}
-              selected={betsState.currentBet?.game?.type} />)}
+              selected={betsState.currentBet?.game?.type}>
+              {game.type}
+            </Button>)}
         </div>
       </div>
       <section>
@@ -122,6 +130,20 @@ const NewGame = () => {
           onBallClicked={handleBallClicked}
           themeColor={betsState.currentBet?.game?.color} />
       </section>
+      <div>
+        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}>
+          Complete game
+        </Button>
+        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
+          attributes={{ onClick: () => dispatchBets({ type: 'CLEAR' }) }}>
+          Clear game
+        </Button>
+        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
+          selected={true}>
+          Add to cart
+        </Button>
+
+      </div>
     </section>
   )
 }
