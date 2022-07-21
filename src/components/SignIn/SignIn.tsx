@@ -3,6 +3,8 @@ import { FormEvent, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import SignInWrapper from "./SignInWrapper";
 import { axiosBase } from "api/AxiosConfig";
+import { useAppDispatch } from "store/hooks";
+import { login } from "store/auth-slice";
 
 const SignIn = () => {
 
@@ -10,6 +12,7 @@ const SignIn = () => {
     const [password, setPassword] = useState<string>('');
     const [hasError, setHasError] = useState<boolean>(false);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const handleSignInSubmit = async (event: FormEvent) => {
         event.preventDefault();
@@ -21,8 +24,10 @@ const SignIn = () => {
             });
 
             const { data } = response;
+            console.log(response)
 
             const token = data.token.token;
+            dispatch(login(token))
             localStorage.setItem('token', token);
             console.log(data)
             navigate('/');

@@ -20,9 +20,11 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
   if (action.type === 'CHANGE-GAME') {
     const indexOfCurrentGame = state.incompleteBets.
       findIndex(bet => bet?.game?.type === state.currentBet?.game?.type);
+
     if (indexOfCurrentGame !== -1) {
       state.incompleteBets.splice(indexOfCurrentGame, 1);
     }
+    
     if (state.currentBet?.game !== undefined) {
       state.incompleteBets.push(state.currentBet as CurrentBet);
     }
@@ -52,7 +54,7 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
       state.currentBet?.numbersSelected.push(action.payload as string);
     } else {
       window.alert(`Vocês já selecionou ${currentBetGame?.max_number} números, quantidade máxima para o`+ 
-      `jogo ${currentBetGame?.type}.`)
+      ` jogo ${currentBetGame?.type}.`)
     }
     return ({
       currentBet: state.currentBet,
@@ -83,7 +85,6 @@ const NewGame = () => {
 
   useEffect(() => {
     if (gamesAvailable.length !== 0) {
-      console.log(gamesAvailable)
       dispatchBets({ type: 'CHANGE-GAME', payload: gamesAvailable[0] });
     }
   }, [gamesAvailable]);
