@@ -14,7 +14,7 @@ function Ball({ children, color, ballsSelected, onBallClicked }: Props) {
             color={color}
             active={ballsSelected.includes(children)}
             onClick={() => onBallClicked(children)}>
-            {children}
+            {parseInt(children) < 10 ? `0${children}` : children}
         </BallWrapper>
     )
 }

@@ -69,16 +69,33 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
     }
   }
 
+  if (action.type === 'COMPLETE') {
+    return {
+      currentBet: { game: state.currentBet?.game, numbersSelected: [] },
+      incompleteBets: state.incompleteBets
+    }
+  }
+
   return {
     currentBet: undefined,
     incompleteBets: []
   }
 }
 
+function getRandomIntWithoutUnwanted(min: number, max: number, unwanted: number[]): number {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  let randomNumber = Math.floor(Math.random() * (max - min)) + min;
+  if (unwanted.includes(randomNumber)) {
+    return getRandomIntWithoutUnwanted(arguments[0], arguments[1], arguments[2]);
+  }
+  return randomNumber;
+}
+
 const NewGame = () => {
   const [gamesAvailable, setGamesAvailable] = useState<Game[]>([]);
-
   const [betsState, dispatchBets] = useReducer(betsReducer, { currentBet: undefined, incompleteBets: [] });
+  //console.log(betsState.currentBet?.game)
 
   useEffect(() => {
 
@@ -104,48 +121,73 @@ const NewGame = () => {
     dispatchBets({ type: 'CHANGE-GAME', payload: gameSelected });
   }
 
+  function handleCompleteGame() {
+    const gameNumbersList: string[] = [];
+    const numbersSelected = betsState.currentBet?.numbersSelected as string[];
+    const maxNumber = parseInt(betsState.currentBet?.game?.max_number as string);
+    const range = parseInt(betsState.currentBet?.game?.range as string);
+    for (let i = 1; i <= range; i++) {
+      const numberString = i.toString();
+      gameNumbersList.push(numberString);
+    }
+    const numbersRemaining = gameNumbersList.filter(number => {
+  
+      if (number[0] === '0') {
+        return !numbersSelected.includes(number[1]);
+      }
+      return !numbersSelected.includes(number);
+    })
+    for (let i=0; i < maxNumber - numbersSelected.length; i++) {
+      const random = Math.floor(Math.random() * (numbersRemaining.length));
+      dispatchBets({ type: 'NUMBER-SELECTED',  payload: numbersRemaining[random] });
+      numbersRemaining.splice(random, 1);
+    }
+  }
 
-  return (
+
+
+return (
+  <section>
+    <h2>NEW BET FOR {betsState.currentBet?.game?.type.toUpperCase()}</h2>
+    <div>
+      <h3>Choose a game</h3>
+      <div>
+        {gamesAvailable.map((game, id) =>
+          <Button
+            key={id}
+            themeColor={game.color}
+            attributes={{ onClick: () => handleGameTypeButtonClick(game) }}
+            selected={betsState.currentBet?.game?.type}>
+            {game.type}
+          </Button>)}
+      </div>
+    </div>
     <section>
-      <h2>NEW BET FOR {betsState.currentBet?.game?.type.toUpperCase()}</h2>
-      <div>
-        <h3>Choose a game</h3>
-        <div>
-          {gamesAvailable.map((game, id) =>
-            <Button
-              key={id}
-              themeColor={game.color}
-              attributes={{ onClick: () => handleGameTypeButtonClick(game) }}
-              selected={betsState.currentBet?.game?.type}>
-              {game.type}
-            </Button>)}
-        </div>
-      </div>
-      <section>
-        <h3>Fill your bet</h3>
-        <h4>{betsState.currentBet?.game?.description}</h4>
-        <BallsSet
-          ballsCount={parseInt(betsState.currentBet?.game?.range as string)}
-          ballsSelected={betsState.currentBet?.numbersSelected as string[]}
-          onBallClicked={handleBallClicked}
-          themeColor={betsState.currentBet?.game?.color} />
-      </section>
-      <div>
-        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}>
-          Complete game
-        </Button>
-        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
-          attributes={{ onClick: () => dispatchBets({ type: 'CLEAR' }) }}>
-          Clear game
-        </Button>
-        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
-          selected={true}>
-          Add to cart
-        </Button>
-
-      </div>
+      <h3>Fill your bet</h3>
+      <h4>{betsState.currentBet?.game?.description}</h4>
+      <BallsSet
+        ballsCount={parseInt(betsState.currentBet?.game?.range as string)}
+        ballsSelected={betsState.currentBet?.numbersSelected as string[]}
+        onBallClicked={handleBallClicked}
+        themeColor={betsState.currentBet?.game?.color} />
     </section>
-  )
+    <div>
+      <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
+        attributes={{ onClick: handleCompleteGame }}>
+        Complete game
+      </Button>
+      <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
+        attributes={{ onClick: () => dispatchBets({ type: 'CLEAR' }) }}>
+        Clear game
+      </Button>
+      <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
+        selected={true}>
+        Add to cart
+      </Button>
+
+    </div>
+  </section>
+)
 }
 
 export default NewGame
