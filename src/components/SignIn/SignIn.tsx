@@ -5,14 +5,16 @@ import SignInWrapper from "./SignInWrapper";
 import { axiosBase } from "api/AxiosConfig";
 import { useAppDispatch } from "store/hooks";
 import { login } from "store/auth-slice";
+import User from "types/User";
+
 
 const SignIn = () => {
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [hasError, setHasError] = useState<boolean>(false);
-    const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const handleSignInSubmit = async (event: FormEvent) => {
         event.preventDefault();
@@ -24,13 +26,12 @@ const SignIn = () => {
             });
 
             const { data } = response;
-            console.log(response)
-
-            const token = data.token.token;
-            dispatch(login(token))
-            localStorage.setItem('token', token);
-            console.log(data)
-            navigate('/');
+            console.log('data: ', data)
+            const user: User = { id: data.user.id, token: data.token}; 
+            console.log(user)
+            dispatch(login(user))
+            localStorage.setItem('token', JSON.stringify(user.token));
+            navigate('/')
 
         } catch (e) {
             setHasError(true);
