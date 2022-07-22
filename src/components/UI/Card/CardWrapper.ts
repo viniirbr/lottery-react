@@ -1,7 +1,7 @@
 import styled, { CSSProperties } from 'styled-components'
 
 interface Props{
-    hasShadow: boolean,
+    hasShadow?: boolean,
     styles: CSSProperties
 }
 

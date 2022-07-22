@@ -4,7 +4,7 @@ import CardWrapper from "./CardWrapper"
 
 interface Props {
     children: ReactNode,
-    hasShadow: boolean,
+    hasShadow?: boolean,
     styles: CSSProperties
 }
 

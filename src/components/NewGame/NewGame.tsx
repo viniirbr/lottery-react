@@ -4,6 +4,10 @@ import Game from "types/Game"
 import Button from "components/UI/Button/Button";
 import BallsSet from "./BallsSet/BallsSet";
 import { CurrentBet } from "types/CurrentBet";
+import { useOutletContext } from "react-router-dom";
+import Bet from "types/Bet";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { addBet } from "store/cart-slice";
 
 interface BetsState {
   currentBet: CurrentBet | undefined,
@@ -82,20 +86,11 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
   }
 }
 
-function getRandomIntWithoutUnwanted(min: number, max: number, unwanted: number[]): number {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  let randomNumber = Math.floor(Math.random() * (max - min)) + min;
-  if (unwanted.includes(randomNumber)) {
-    return getRandomIntWithoutUnwanted(arguments[0], arguments[1], arguments[2]);
-  }
-  return randomNumber;
-}
-
 const NewGame = () => {
   const [gamesAvailable, setGamesAvailable] = useState<Game[]>([]);
   const [betsState, dispatchBets] = useReducer(betsReducer, { currentBet: undefined, incompleteBets: [] });
-  //console.log(betsState.currentBet?.game)
+  const dispatchCart = useAppDispatch();
+  const user = useAppSelector(state => state.auth.user);
 
   useEffect(() => {
 
@@ -144,6 +139,22 @@ const NewGame = () => {
     }
   }
 
+  function handleAddToCart() {
+    if (betsState.currentBet?.numbersSelected.length === betsState.currentBet?.game?.max_number) {
+      const bet: Bet = {
+        choosen_numbers: betsState.currentBet?.numbersSelected.join(',') as string,
+        created_at: (new Date()).toDateString(),
+        game_id: betsState.currentBet?.game?.id as number,
+        id: Math.floor(Math.random() * (500)),
+        price: betsState.currentBet?.game?.price as number,
+        type: betsState.currentBet?.game as Game,
+        user_id: user?.id as number
+      }
+      dispatchCart(addBet(bet));
+      dispatchBets({type: 'CLEAR'})
+    }
+  }
+
 
 
 return (
@@ -181,7 +192,7 @@ return (
         Clear game
       </Button>
       <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
-        selected={true}>
+        selected={true} attributes={{onClick: handleAddToCart}}>
         Add to cart
       </Button>
 
