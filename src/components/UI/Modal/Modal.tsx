@@ -30,7 +30,7 @@ export const Modal: FC<{ children: ReactNode }> = ({ children }) => {
 
 const ModalWrapper = styled.div`
     position: fixed;
-    top: 30vh;
+    top: 10vh;
     left: 10%;
     width: 80%;
     z-index: 100;

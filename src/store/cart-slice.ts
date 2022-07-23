@@ -15,9 +15,15 @@ const cartSlice = createSlice({
     reducers: {
         addBet(state: CartState, action: PayloadAction<Bet>) {
             state.bets.push(action.payload)
+        },
+        removeBet(state: CartState, action: PayloadAction<Bet>) {
+            const { bets } = state
+            bets.splice(bets.findIndex(bet => bet.id === action.payload.id), 1);
+            state.bets = bets;
         }
     }
 })
 
 export const { addBet } = cartSlice.actions;
+export const { removeBet } = cartSlice.actions;
 export default cartSlice.reducer;

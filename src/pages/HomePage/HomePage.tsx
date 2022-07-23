@@ -8,10 +8,7 @@ import Bet from "types/Bet";
 function HomePage() {
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [bets, setBets] = useState<Bet[]>([]);
-  const user = useAppSelector(state => state.auth.user);
-  console.log(user)
-
+  
   return (
     <>
     <Header showCartModal={setShowModal}/>
