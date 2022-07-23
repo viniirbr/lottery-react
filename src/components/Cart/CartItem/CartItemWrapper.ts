@@ -20,7 +20,6 @@ const CartItemWrapper = styled.li<Props>`
         flex-direction: column;
         justify-content: center;
         width: 70%;
-        gap: 10px;
         padding-left: 10px;
         border-left: 4px solid ${props => props.color};
         border-bottom-left-radius: 3px;

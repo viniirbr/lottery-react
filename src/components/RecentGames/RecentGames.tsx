@@ -6,11 +6,13 @@ import { Link } from 'react-router-dom'
 import Game from 'types/Game';
 import BetsList from './GamesList/BetsList';
 import RecentGamesWrapper from './RecentGamesWrapper'
+import { useAppSelector } from 'store/hooks';
 
 function RecentGames() {
 
   const [bets, setBets] = useState<Bet[]>([]);
-  const [filter, setFilter] = useState<string>('')
+  const [filter, setFilter] = useState<string>('');
+  const token = useAppSelector(state => state.auth.user?.token.token);
 
   useEffect(() => {
 
@@ -19,14 +21,10 @@ function RecentGames() {
       const [betsResponse, gamesResponse] = await Promise.all([
         axiosBase.get<Bet[]>('/bet/all-bets', {
           headers: {
-            "Authorization": "Bearer MjI.SgPDH_OsFGp5gB60CePfOrjlEvAfk-jNKAbv4EW8deQUgr-Hb-XvidxCFrdr"
+            "Authorization": `Bearer ${token}`
           }
         }),
-        axiosBase.get<{ min_cart_value: number, types: Game[] }>('/cart_games', {
-          headers: {
-            "Authorization": "Bearer MjI.SgPDH_OsFGp5gB60CePfOrjlEvAfk-jNKAbv4EW8deQUgr-Hb-XvidxCFrdr"
-          }
-        })
+        axiosBase.get<{ min_cart_value: number, types: Game[] }>('/cart_games')
       ]);
 
       const gamesAvailable = gamesResponse.data.types;

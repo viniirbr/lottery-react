@@ -4,10 +4,11 @@ import ReactDOM from 'react-dom'
 import { useAppSelector } from "store/hooks"
 
 interface Props {
-    hideCartModal: (show: boolean) => void
+    hideCartModal: (show: boolean) => void,
+    minCartValue: number
 }
 
-function CartModal({ hideCartModal }: Props) {
+function CartModal({ hideCartModal, minCartValue }: Props) {
 
     const bets = useAppSelector(state => state.cart.bets);
 
@@ -17,7 +18,7 @@ function CartModal({ hideCartModal }: Props) {
                 document.getElementById('backdrop') as Element)}
             {ReactDOM.createPortal(
                 <Modal>
-                    <Cart bets={bets}/>
+                    <Cart bets={bets} minCartValue={minCartValue}/>
                 </Modal>, document.getElementById('modal') as Element)}
         </>
     )

@@ -15,7 +15,7 @@ border-bottom: 2px solid #EBEBEB;
     width: 100%;
 }
 
-& nav,ul {
+& nav, ul {
     display: flex;
     align-items: center;
 }

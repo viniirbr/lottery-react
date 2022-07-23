@@ -16,6 +16,7 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100vh;
+overflow: hidden;
 z-index: 10;
 background: rgba(0, 0, 0, 0.75);
 `
@@ -37,5 +38,4 @@ const ModalWrapper = styled.div`
     overflow: hidden;
     background: white;
     border-radius: 10px;
-    padding: 10px;
 `
