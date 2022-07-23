@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { login } from "store/auth-slice";
 import { ShoppingCart } from 'phosphor-react'
 import { FC } from "react";
+import { clearCart } from "store/cart-slice";
 
 interface Props {
     showCartModal: (show: boolean) => void
@@ -18,6 +19,7 @@ const Header: FC<Props> = ({ showCartModal }) => {
     function handleLogout() {
         localStorage.removeItem('token');
         dispatch(login(undefined));
+        dispatch(clearCart())
         navigate('/');
     }
 
