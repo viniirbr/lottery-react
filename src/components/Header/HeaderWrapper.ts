@@ -41,5 +41,12 @@ border-bottom: 2px solid #EBEBEB;
     margin-right: 10px;
 }
 
+@media screen and (min-width: 700px) {
+        padding: 20px 130px;
+        & nav ul {
+            gap: 30px;
+        }
+}
+
 `
 export default HeaderWrapper;

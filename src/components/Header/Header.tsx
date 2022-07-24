@@ -33,7 +33,7 @@ const Header: FC<Props> = ({ showCartModal }) => {
                 <ul>
                     <li><h2><Link to='/'>Account</Link></h2></li>
                     <li onClick={handleLogout}><h2>Log out</h2></li>
-                    {window.innerWidth < 900 && <li onClick={() => showCartModal(true)}>
+                    {window.innerWidth < 700 && <li onClick={() => showCartModal(true)}>
                         <ShoppingCart size={32} />
                         <span>{bets.length}</span></li>}
                 </ul>

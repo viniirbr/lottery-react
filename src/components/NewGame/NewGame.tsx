@@ -8,6 +8,7 @@ import { useOutletContext } from "react-router-dom";
 import Bet from "types/Bet";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { addBet } from "store/cart-slice";
+import NewGameWrapper from "./NewGameWrapper";
 
 interface BetsState {
   currentBet: CurrentBet | undefined,
@@ -121,17 +122,20 @@ const NewGame = () => {
     const numbersSelected = betsState.currentBet?.numbersSelected as string[];
     const maxNumber = parseInt(betsState.currentBet?.game?.max_number as string);
     const range = parseInt(betsState.currentBet?.game?.range as string);
+
     for (let i = 1; i <= range; i++) {
       const numberString = i.toString();
       gameNumbersList.push(numberString);
     }
+
     const numbersRemaining = gameNumbersList.filter(number => {
 
       if (number[0] === '0') {
         return !numbersSelected.includes(number[1]);
       }
       return !numbersSelected.includes(number);
-    })
+    });
+
     for (let i = 0; i < maxNumber - numbersSelected.length; i++) {
       const random = Math.floor(Math.random() * (numbersRemaining.length));
       dispatchBets({ type: 'NUMBER-SELECTED', payload: numbersRemaining[random] });
@@ -159,7 +163,7 @@ const NewGame = () => {
 
 
   return (
-    <section>
+    <NewGameWrapper>
       <h2>NEW BET FOR {betsState.currentBet?.game?.type.toUpperCase()}</h2>
       <div>
         <h3>Choose a game</h3>
@@ -198,7 +202,7 @@ const NewGame = () => {
         </Button>
 
       </div>
-    </section>
+    </NewGameWrapper>
   )
 }
 

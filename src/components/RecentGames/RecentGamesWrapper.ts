@@ -16,9 +16,58 @@ const RecentGamesWrapper = styled.section`
         width: 100%;
     }
 
-    & header div {
-
+    & > header > div > div {
+        display: flex;
+        flex-direction: column;
     }
+
+    & > header > div > div > div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    & header div p {
+        margin: 10px 10px 10px 0;
+    }
+
+    & header div button {
+        margin-right: 10px;
+        }
+
+    @media screen and (min-width: 500px) {
+
+        & header {
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        & > header > div {
+            gap: 30px;
+        }
+
+        & header h3 {
+            display: flex;
+            align-items: center;
+            color: #B5C401;
+            cursor: pointer;
+        }
+
+        & header div {
+            display: flex;
+            align-items: center;
+        }
+
+        & > header > div > div {
+        display: flex;
+        flex-direction: row;
+    }
+    }
+
+    @media screen and (min-width: 700px) {
+        padding: 40px 130px 20px 130px;
+    }
+
 
 `
 

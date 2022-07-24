@@ -15,8 +15,7 @@ function BetsList({ bets, filterBets }: Props) {
           return filterBets === bet.type.type
         }
         return true;
-      })
-        .map((bet, id) => <BetItem key={id} bet={bet} />)}
+      }).map((bet, id) => <BetItem key={id} bet={bet} />)}
     </BetsListWrapper>
   )
 }

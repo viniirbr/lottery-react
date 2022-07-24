@@ -7,6 +7,7 @@ import Game from 'types/Game';
 import BetsList from './GamesList/BetsList';
 import RecentGamesWrapper from './RecentGamesWrapper'
 import { useAppSelector } from 'store/hooks';
+import { ArrowRight } from 'phosphor-react'
 
 function RecentGames() {
 
@@ -37,7 +38,7 @@ function RecentGames() {
     }
 
     fetchData();
-  }, []);
+  }, [token]);
 
   const gameTypesWithDuplicates = bets?.map(bet => bet.type) as Game[];
   const games = gameTypesWithDuplicates?.filter((game, index, array) => {
@@ -66,19 +67,27 @@ function RecentGames() {
   return (
     <RecentGamesWrapper>
       <header>
-        <h2>RECENT GAMES</h2>
         <div>
-          <p>Filters</p>
-          {filterButtons}
+          <h2>RECENT GAMES</h2>
+          <div>
+            <p>Filters</p>
+            <div>
+              {filterButtons}
+            </div>
+          </div>
         </div>
+        {window.innerWidth > 700 &&
+          <Link to='/new-game'><h3>New Bet<ArrowRight size={32} color='#B5C401' /></h3></Link>}
       </header>
       <BetsList bets={bets} filterBets={filter} />
       <Link to='/new-game'>
-        <Button
-          themeColor='#B5C401'
-          styles={{ position: 'fixed', bottom: '30px', right: '30px' }}>
-          New Bet
-        </Button>
+        {window.innerWidth <= 700 &&
+          <Button
+            themeColor='#B5C401'
+            styles={{ position: 'fixed', bottom: '30px', right: '30px' }}>
+            New Bet
+          </Button>
+        }
       </Link>
 
     </RecentGamesWrapper>

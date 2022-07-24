@@ -14,6 +14,15 @@ p {
     margin-bottom: 20px;
 }
 
+@media screen and (min-width: 500px) {
+    grid-template-columns: repeat(auto-fill, 20%);
+    }
+
+@media screen and (min-width: 700px) {
+    padding: 30px 0;
+    grid-template-columns: repeat(auto-fill, 15%);
+    }
+
 `
 
 export default BallSetWrapper;
