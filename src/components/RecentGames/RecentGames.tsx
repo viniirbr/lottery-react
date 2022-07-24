@@ -5,36 +5,44 @@ import Bet from 'types/Bet'
 import { Link } from 'react-router-dom'
 import Game from 'types/Game';
 import BetsList from './GamesList/BetsList';
-import RecentGamesWrapper from './RecentGamesWrapper'
+import RecentGamesWrapper from './RecentGamesWrapper';
 import { useAppSelector } from 'store/hooks';
-import { ArrowRight } from 'phosphor-react'
+import { ArrowRight } from 'phosphor-react';
+import { BeatLoader } from 'react-spinners';
 
 function RecentGames() {
 
   const [bets, setBets] = useState<Bet[]>([]);
   const [filter, setFilter] = useState<string>('');
   const token = useAppSelector(state => state.auth.user?.token.token);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
 
     const fetchData = async () => {
 
-      const [betsResponse, gamesResponse] = await Promise.all([
-        axiosBase.get<Bet[]>('/bet/all-bets', {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        }),
-        axiosBase.get<{ min_cart_value: number, types: Game[] }>('/cart_games')
-      ]);
+      try {
+        const [betsResponse, gamesResponse] = await Promise.all([
+          axiosBase.get<Bet[]>('/bet/all-bets', {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          }),
+          axiosBase.get<{ min_cart_value: number, types: Game[] }>('/cart_games')
+        ]);
 
-      const gamesAvailable = gamesResponse.data.types;
+        const gamesAvailable = gamesResponse.data.types;
 
-      const bets = betsResponse.data.map(bet => {
-        return { ...bet, type: gamesAvailable.find(game => game.type === bet.type.type) as Game };
-      });
+        const bets = betsResponse.data.map(bet => {
+          return { ...bet, type: gamesAvailable.find(game => game.type === bet.type.type) as Game };
+        });
 
-      setBets(bets);
+        setBets(bets);
+      } catch (e) {
+      } finally {
+        setIsLoading(false);
+      }
+
     }
 
     fetchData();
@@ -69,17 +77,19 @@ function RecentGames() {
       <header>
         <div>
           <h2>RECENT GAMES</h2>
-          <div>
+          {!isLoading && bets.length !== 0 && <div>
             <p>Filters</p>
             <div>
               {filterButtons}
             </div>
-          </div>
+          </div>}
         </div>
         {window.innerWidth > 700 &&
           <Link to='/new-game'><h3>New Bet<ArrowRight size={32} color='#B5C401' /></h3></Link>}
       </header>
-      <BetsList bets={bets} filterBets={filter} />
+      {!isLoading && bets.length !== 0 && <BetsList bets={bets} filterBets={filter} />}
+      {!isLoading && bets.length === 0 && <p>Não há apostas recentes. Que tal criar uma nova aposta?</p>}
+      {isLoading && <BeatLoader color='#B5C401' size={20} />}
       <Link to='/new-game'>
         {window.innerWidth <= 700 &&
           <Button

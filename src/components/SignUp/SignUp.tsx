@@ -1,5 +1,4 @@
 import { axiosBase } from "api/AxiosConfig";
-import axios from "axios";
 import SignInWrapper from "components/SignIn/SignInWrapper"
 import Input from "components/UI/Input/Input"
 import { FormEvent, useState } from "react"
@@ -10,14 +9,23 @@ const SignUp = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [isLoading, setIsloading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSignUpSubmit = async (event: FormEvent) => {
+    setIsloading(true);
     event.preventDefault();
-    const response = await axiosBase.post('/user/create', {
-      "name": name, "email": email, "password": password
-    });
-    console.log(response)
+    try {
+      const response = await axiosBase.post('/user/create', {
+        "name": name, "email": email, "password": password
+      });
+      navigate('/')
+    } catch(e) {
+
+    } finally {
+      setIsloading(false);
+    }
+   
   }
   return (
     <SignInWrapper
@@ -26,19 +34,26 @@ const SignUp = () => {
       title="Registration"
       submitButtonTitle="Register"
       exitButtonTitle="Back"
-      exitRoute="/">
+      exitRoute="/"
+      isLoading={isLoading}>
       <Input
         label="Name"
-        inputAttributes={{ type: 'name', id: 'name', placeholder: 'Name', 
-        value: name, onChange:(e) => setName(e.target.value) }} />
+        inputAttributes={{
+          type: 'name', id: 'name', placeholder: 'Name',
+          value: name, onChange: (e) => setName(e.target.value)
+        }} />
       <Input
         label="Email"
-        inputAttributes={{ type: 'email', id: 'email', placeholder: 'Email',
-        value: email, onChange:(e) => setEmail(e.target.value) }} />
+        inputAttributes={{
+          type: 'email', id: 'email', placeholder: 'Email',
+          value: email, onChange: (e) => setEmail(e.target.value)
+        }} />
       <Input
         label="Password"
-        inputAttributes={{ type: 'password', id: 'password', placeholder: 'Password',
-        value: password, onChange:(e) => setPassword(e.target.value) }} />
+        inputAttributes={{
+          type: 'password', id: 'password', placeholder: 'Password',
+          value: password, onChange: (e) => setPassword(e.target.value)
+        }} />
     </SignInWrapper>
   )
 }

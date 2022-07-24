@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "store/hooks"
 import { axiosBase } from "api/AxiosConfig"
 import { clearCart } from "store/cart-slice"
 import { useEffect, useState } from "react"
-import LoadingSpinner from "components/UI/LoadingSpinner"
+import { BeatLoader } from 'react-spinners'
 
 interface Props {
   bets: Bet[],
@@ -74,7 +74,7 @@ function Cart({ bets, minCartValue }: Props) {
         <footer>
           <button disabled={!isMoreThanMinCartValue} onClick={handleSaveGame}>
             Save
-            {isLoading ? <LoadingSpinner /> :
+            {isLoading ? <BeatLoader color='#27C383' size={15}/> :
               <ArrowRight size={32} color={isMoreThanMinCartValue ? '#27C383' : '#707070'} />}
           </button>
         </footer>

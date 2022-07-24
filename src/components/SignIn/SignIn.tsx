@@ -13,10 +13,13 @@ const SignIn = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [hasError, setHasError] = useState<boolean>(false);
+    const [isLoading, setIsloading] = useState<boolean>(false);
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const handleSignInSubmit = async (event: FormEvent) => {
+        setIsloading(true);
         event.preventDefault();
         try {
             
@@ -35,6 +38,8 @@ const SignIn = () => {
 
         } catch (e) {
             setHasError(true);
+        } finally {
+            setIsloading(false);
         }
     }
 
@@ -44,7 +49,8 @@ const SignIn = () => {
             handleSubmit={handleSignInSubmit}
             submitButtonTitle="Log In"
             exitButtonTitle="SignUp"
-            exitRoute="/signup">
+            exitRoute="/signup"
+            isLoading={isLoading}>
             <Input
                 label="Email"
                 inputAttributes={{

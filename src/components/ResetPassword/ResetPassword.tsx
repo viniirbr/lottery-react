@@ -6,13 +6,20 @@ import { FormEvent, useState } from "react"
 const ResetPassword = () => {
 
   const [email, setEmail] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleResetPassword = async (event: FormEvent) => {
-      event.preventDefault();
+    setIsLoading(true);
+    event.preventDefault();
+    try {
       const response = await axiosBase.post('/reset', {
-        "email":email
+        "email": email
       })
-      console.log(response)
+    } catch(e) {
+
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -22,11 +29,14 @@ const ResetPassword = () => {
       title="Reset password"
       submitButtonTitle="Send link"
       exitButtonTitle="Back"
-      exitRoute="/">
+      exitRoute="/"
+      isLoading={isLoading}>
       <Input
         label="Email"
-        inputAttributes={{ type: 'email', id: 'email', placeholder: 'Email',
-        value: email, onChange: (e) => setEmail(e.target.value)}} />
+        inputAttributes={{
+          type: 'email', id: 'email', placeholder: 'Email',
+          value: email, onChange: (e) => setEmail(e.target.value)
+        }} />
     </Form>
   )
 }

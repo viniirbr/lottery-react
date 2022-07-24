@@ -22,6 +22,9 @@ const FormWrapper = styled.form<Props>`
         font-size: 1.5rem;
         cursor: pointer;
         color: #B5C401;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     } 
 `
 
