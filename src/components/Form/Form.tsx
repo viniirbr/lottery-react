@@ -1,5 +1,5 @@
 import Card from "components/UI/Card/Card"
-import { FC, FormEvent, ReactNode } from "react"
+import { FC, ReactNode } from "react"
 import FormWrapper from "./FormWrapper"
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowLeft } from 'phosphor-react'
@@ -13,7 +13,7 @@ interface Props {
     exitRoute: string,
     className: string,
     isLoading: boolean,
-    exitRouteFoward: boolean
+    exitRouteFoward?: boolean
     handleSubmit: any
 }
 
@@ -37,4 +37,4 @@ const Form: FC<Props> = ({ title, children, submitButtonTitle, exitButtonTitle, 
     )
 }
 
-export default Form
+export default Form;

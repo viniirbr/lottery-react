@@ -1,27 +1,24 @@
 import Input from "components/UI/Input/Input";
-import { FormEvent, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import SignInWrapper from "./SignInWrapper";
 import { axiosBase } from "api/AxiosConfig";
 import { useAppDispatch } from "store/hooks";
 import { login } from "store/auth-slice";
 import User from "types/User";
-import { useForm, Controller } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import signInSchema from "schemas/signInSchema";
-
+import { AxiosError } from "axios";
+import { toast } from 'react-toastify';
 
 type FormData = {
     email: string,
     password: string
 }
 
-
 const SignIn = () => {
-
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [hasError, setHasError] = useState<boolean>(false);
+    
     const [isLoading, setIsloading] = useState<boolean>(false);
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: yupResolver(signInSchema)
@@ -47,7 +44,12 @@ const SignIn = () => {
             navigate('/')
 
         } catch (e) {
-            setHasError(true);
+            const error = e as AxiosError;
+            if (error.response?.status === 401) {
+                toast.error('Email ou senha inválidos.');
+                return;
+            }
+            toast.error('Ocorreu um erro na sua requisição.');
         } finally {
             setIsloading(false);
         }
@@ -67,7 +69,6 @@ const SignIn = () => {
                 name="email"
                 control={control}
                 defaultValue=""
-                rules={{ minLength: 6 }}
                 render={({ field: { value, onChange, onBlur } }) =>
                     <Input
                         label="Email"
@@ -91,8 +92,6 @@ const SignIn = () => {
                         }} />} />
             <p>{errors.password?.message}</p>
 
-
-            {hasError && <p style={{ color: 'red' }}>Houve um erro</p>}
             <Link to={'/reset'}>I forgot my password</Link>
         </SignInWrapper>
     )
