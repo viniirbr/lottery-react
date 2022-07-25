@@ -14,7 +14,7 @@ const CartWrapper = styled.aside`
         flex-direction: column;
         gap: 20px;
         min-height: 230px;
-        max-height: 300px;
+        max-height: 255px;
         overflow-y: auto;
     }
 
