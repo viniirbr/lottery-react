@@ -25,7 +25,15 @@ const FormWrapper = styled.form<Props>`
         display: flex;
         align-items: center;
         justify-content: center;
-    } 
+        gap: 5px;
+        margin-top: 20px;
+    }
+    
+    & a {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
 `
 
 export default FormWrapper;

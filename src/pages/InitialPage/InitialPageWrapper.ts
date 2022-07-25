@@ -3,10 +3,10 @@ import styled from "styled-components";
 const InitialPageWrapper = styled.main`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 100vh;
   text-align: center;
-  padding: 50px 30px;
+  padding: 30px 50px;
   box-sizing: border-box;
   
   & section {
@@ -39,16 +39,30 @@ const InitialPageWrapper = styled.main`
   }
 
 
-  @media screen and (min-width: 750px){
+  @media screen and (min-width: 700px){
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    margin-top: 150px;
+    margin-top: 0;
 
     & section {
-    width: 25%;
-    height: 200px;
+    width: 20%;
+    height: 280px;
   }
+
+  & section h1 {
+    font-size: 3rem;
+  }
+
+  & section h2 {
+    font-size: 2.7rem;
+    word-spacing: 100px;
+  }
+
+    & form {
+      width: 40%;
+      max-width: 350px;
+    }
 
   & section h1,h2,h4 {
     font-weight: 700;

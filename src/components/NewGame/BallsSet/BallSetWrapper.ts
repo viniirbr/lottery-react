@@ -20,7 +20,10 @@ p {
 
 @media screen and (min-width: 700px) {
     padding: 30px 0;
-    grid-template-columns: repeat(auto-fill, 15%);
+    }
+
+@media screen and (min-width: 1150px) {
+    grid-template-columns: repeat(auto-fill, 10%);
     }
 
 `

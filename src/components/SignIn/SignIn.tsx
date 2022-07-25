@@ -50,7 +50,8 @@ const SignIn = () => {
             submitButtonTitle="Log In"
             exitButtonTitle="SignUp"
             exitRoute="/signup"
-            isLoading={isLoading}>
+            isLoading={isLoading}
+            exitRouteFoward={true}>
             <Input
                 label="Email"
                 inputAttributes={{

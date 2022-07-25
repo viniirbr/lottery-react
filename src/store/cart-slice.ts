@@ -2,10 +2,12 @@ import Bet from "types/Bet";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface CartState {
-    bets: Bet[]
+    bets: Bet[],
+    minCartValue: number
 }
 
 const initialState: CartState = {
+    minCartValue: 0,
     bets: []
 }
 
@@ -23,9 +25,12 @@ const cartSlice = createSlice({
         },
         clearCart(state: CartState) {
             state.bets = [];
+        },
+        setMinCartValue(state: CartState, action: PayloadAction<number>) {
+            state.minCartValue = action.payload;
         }
     }
 })
 
-export const { addBet, removeBet, clearCart } = cartSlice.actions;
+export const { addBet, removeBet, clearCart, setMinCartValue } = cartSlice.actions;
 export default cartSlice.reducer;

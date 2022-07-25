@@ -5,14 +5,16 @@ const CartWrapper = styled.aside`
     display: flex;
     flex-direction: column;
     border: 1px solid #E2E2E2;
-    max-height: 80vh;
     min-height: 100px;
+    background: white;
     
     ul {
+        padding-top: 10px;
         display: flex;
         flex-direction: column;
         gap: 20px;
-        max-height: 240px;
+        min-height: 230px;
+        max-height: 300px;
         overflow-y: auto;
     }
 

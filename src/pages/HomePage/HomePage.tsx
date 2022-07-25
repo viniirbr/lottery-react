@@ -3,7 +3,8 @@ import CartModal from "components/CartModal/CartModal";
 import Header from "components/Header/Header"
 import { useEffect, useState } from "react"
 import { Outlet } from 'react-router-dom'
-import { useAppSelector } from "store/hooks";
+import { setMinCartValue } from "store/cart-slice";
+import { useAppDispatch, useAppSelector } from "store/hooks";
 import Game from "types/Game";
 
 type ResponseType = {
@@ -14,8 +15,9 @@ type ResponseType = {
 function HomePage() {
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [minCartValue, setMinCartValue] = useState<number>();
   const token = useAppSelector(state => state.auth.user?.token.token);
+  const dispatch = useAppDispatch();
+  const minCartValue = useAppSelector(state => state.cart.minCartValue);
 
   useEffect(() => {
 
@@ -27,7 +29,7 @@ function HomePage() {
           'Authorization': `Bearer ${token}`
         }
       });
-      setMinCartValue(response.data.min_cart_value);
+      dispatch(setMinCartValue(response.data.min_cart_value));
     }
   }, [])
 
@@ -35,7 +37,7 @@ function HomePage() {
     <>
       <Header showCartModal={setShowModal} />
       <Outlet />
-      {showModal && <CartModal hideCartModal={setShowModal} minCartValue={minCartValue as number}/>}
+      {showModal && <CartModal hideCartModal={setShowModal} minCartValue={minCartValue}/>}
     </>
   )
 }

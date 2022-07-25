@@ -35,7 +35,8 @@ const SignUp = () => {
       submitButtonTitle="Register"
       exitButtonTitle="Back"
       exitRoute="/"
-      isLoading={isLoading}>
+      isLoading={isLoading}
+      exitRouteFoward={false}>
       <Input
         label="Name"
         inputAttributes={{

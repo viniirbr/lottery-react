@@ -14,9 +14,12 @@ cursor: pointer;
 border: 2px solid ${props => props.themeColor};
 color: ${props => props.active ? 'white' : props.themeColor};
 min-width: 100px;
-height: 35px;
+padding: 10px 5px;
 ${props => ({ ...props.styles })}
 
+@media screen and (min-width: 840px) {
+    padding: 10px 20px;
+}
 `
 
 export default ButtonWrapper;

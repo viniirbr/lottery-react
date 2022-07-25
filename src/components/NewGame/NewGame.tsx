@@ -4,11 +4,11 @@ import Game from "types/Game"
 import Button from "components/UI/Button/Button";
 import BallsSet from "./BallsSet/BallsSet";
 import { CurrentBet } from "types/CurrentBet";
-import { useOutletContext } from "react-router-dom";
 import Bet from "types/Bet";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { addBet } from "store/cart-slice";
 import NewGameWrapper from "./NewGameWrapper";
+import Cart from "components/Cart/Cart";
 
 interface BetsState {
   currentBet: CurrentBet | undefined,
@@ -91,6 +91,7 @@ const NewGame = () => {
   const [gamesAvailable, setGamesAvailable] = useState<Game[]>([]);
   const [betsState, dispatchBets] = useReducer(betsReducer, { currentBet: undefined, incompleteBets: [] });
   const dispatchCart = useAppDispatch();
+  const bets = useAppSelector(state => state.cart.bets);
   const user = useAppSelector(state => state.auth.user);
 
   useEffect(() => {
@@ -164,44 +165,47 @@ const NewGame = () => {
 
   return (
     <NewGameWrapper>
-      <h2>NEW BET FOR {betsState.currentBet?.game?.type.toUpperCase()}</h2>
-      <div>
-        <h3>Choose a game</h3>
-        <div>
-          {gamesAvailable.map((game, id) =>
-            <Button
-              key={id}
-              themeColor={game.color}
-              attributes={{ onClick: () => handleGameTypeButtonClick(game) }}
-              selected={betsState.currentBet?.game?.type}>
-              {game.type}
-            </Button>)}
-        </div>
-      </div>
       <section>
-        <h3>Fill your bet</h3>
-        <h4>{betsState.currentBet?.game?.description}</h4>
-        <BallsSet
-          ballsCount={parseInt(betsState.currentBet?.game?.range as string)}
-          ballsSelected={betsState.currentBet?.numbersSelected as string[]}
-          onBallClicked={handleBallClicked}
-          themeColor={betsState.currentBet?.game?.color} />
-      </section>
-      <div>
-        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
-          attributes={{ onClick: handleCompleteGame }}>
-          Complete game
-        </Button>
-        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
-          attributes={{ onClick: () => dispatchBets({ type: 'CLEAR' }) }}>
-          Clear game
-        </Button>
-        <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
-          selected={true} attributes={{ onClick: handleAddToCart }}>
-          Add to cart
-        </Button>
+        <h2>NEW BET FOR {betsState.currentBet?.game?.type.toUpperCase()}</h2>
+        <div>
+          <h3>Choose a game</h3>
+          <div>
+            {gamesAvailable.map((game, id) =>
+              <Button
+                key={id}
+                themeColor={game.color}
+                attributes={{ onClick: () => handleGameTypeButtonClick(game) }}
+                selected={betsState.currentBet?.game?.type}>
+                {game.type}
+              </Button>)}
+          </div>
+        </div>
+        <section>
+          <h3>Fill your bet</h3>
+          <h4>{betsState.currentBet?.game?.description}</h4>
+          <BallsSet
+            ballsCount={parseInt(betsState.currentBet?.game?.range as string)}
+            ballsSelected={betsState.currentBet?.numbersSelected as string[]}
+            onBallClicked={handleBallClicked}
+            themeColor={betsState.currentBet?.game?.color} />
+        </section>
+        <div>
+          <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
+            attributes={{ onClick: handleCompleteGame }}>
+            Complete game
+          </Button>
+          <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
+            attributes={{ onClick: () => dispatchBets({ type: 'CLEAR' }) }}>
+            Clear game
+          </Button>
+          <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
+            selected={true} attributes={{ onClick: handleAddToCart }}>
+            Add to cart
+          </Button>
 
-      </div>
+        </div>
+      </section>
+      {window.innerWidth > 700 && <Cart bets={bets} minCartValue={30}/>}
     </NewGameWrapper>
   )
 }
