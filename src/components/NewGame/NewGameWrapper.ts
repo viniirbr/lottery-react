@@ -9,6 +9,18 @@ const NewGameWrapper = styled.main`
         padding: 40px 20px;
     }
 
+    & > section > h2{
+        font-size: 1.4rem;
+    }
+
+    h2 b {
+        font-weight: 700;
+    }
+
+    section h3 {
+        font-weight: 700;
+    }
+
     & > section > div:nth-child(2) {
         display: flex;
         flex-direction: column;
@@ -36,6 +48,7 @@ const NewGameWrapper = styled.main`
         
         & > section {
             width: 60%;
+            gap: 30px;
         }
 
         & > aside {

@@ -15,10 +15,20 @@ import User from 'types/User'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 
+type Token = {
+  type: string,
+  token: string,
+  expires_at: string
+}
+
 function App() {
 
-  const token = JSON.parse(localStorage.getItem('token') as string);
-  const isLoggedIn = !!token;
+  const token: Token = JSON.parse(localStorage.getItem('token') as string);
+  let hasExpired = undefined;
+  if (token?.expires_at) {
+    hasExpired = (new Date(token.expires_at)).getTime() < Date.now();
+  }
+  const isLoggedIn = !!token && !hasExpired;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -29,7 +39,7 @@ function App() {
     }
 
     fetchUserData(token);
-    navigate('/')
+    navigate('/');
 
 
     async function fetchUserData(token: any) {
@@ -51,7 +61,11 @@ function App() {
 
       }
     }
-  }, [])
+  }, []);
+
+  if (hasExpired) {
+    localStorage.removeItem('token');
+  }
 
   return (
     <>

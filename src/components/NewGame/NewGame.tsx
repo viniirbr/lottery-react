@@ -183,7 +183,7 @@ const NewGame = () => {
   return (
     <NewGameWrapper>
       <section>
-        <h2>NEW BET FOR {betsState.currentBet?.game?.type.toUpperCase()}</h2>
+        <h2><b>NEW BET</b> FOR {betsState.currentBet?.game?.type.toUpperCase()}</h2>
         <div>
           <h3>Choose a game</h3>
           <div>

@@ -30,7 +30,6 @@ const SignIn = () => {
 
             const { data } = response;
             const user: User = { id: data.user.id, token: data.token}; 
-            console.log(user)
             dispatch(login(user))
             localStorage.setItem('token', JSON.stringify(user.token));
             navigate('/')
