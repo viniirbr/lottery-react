@@ -88,7 +88,8 @@ function RecentGames() {
           <Link to='/new-game'><h3>New Bet<ArrowRight size={32} color='#B5C401' /></h3></Link>}
       </header>
       {!isLoading && bets.length !== 0 && <BetsList bets={bets} filterBets={filter} />}
-      {!isLoading && bets.length === 0 && <p>Não há apostas recentes. Que tal criar uma nova aposta?</p>}
+      {!isLoading && bets.length === 0 && <p>Não há apostas recentes. Que tal criar uma
+        <Link to='/new-game'> nova aposta</Link>?</p>}
       {isLoading && <BeatLoader color='#B5C401' size={20} />}
       <Link to='/new-game'>
         {window.innerWidth <= 700 &&

@@ -16,6 +16,10 @@ const RecentGamesWrapper = styled.section`
         width: 100%;
     }
 
+    & a {
+        color: #B5C401;
+    }
+
     & > header > div > div {
         display: flex;
         flex-direction: column;
@@ -66,9 +70,18 @@ const RecentGamesWrapper = styled.section`
 
     @media screen and (min-width: 700px) {
         padding: 40px 130px 20px 130px;
+
+        & > p {
+            font-size: 1.5rem;
+            text-align: center;
+            position: relative;
+            top: calc(100vh/4);
+        }
+
+        & header div h2,a {
+            font-size: 1.5rem;
+        }
     }
-
-
 `
 
 export default RecentGamesWrapper;
