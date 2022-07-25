@@ -46,7 +46,22 @@ border-bottom: 2px solid #EBEBEB;
         & nav ul {
             gap: 30px;
         }
+
+        & nav ul li h1{
+            font-size: 2.3rem;
+            font-weight: 700;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+
+        & nav ul li h2 {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.3rem;
+        }
 }
+
 
 `
 export default HeaderWrapper;
