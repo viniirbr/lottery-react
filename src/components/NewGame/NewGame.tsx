@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { addBet } from "store/cart-slice";
 import NewGameWrapper from "./NewGameWrapper";
 import Cart from "components/Cart/Cart";
+import { ShoppingCart } from 'phosphor-react'
+import { toast } from 'react-toastify'
 
 interface BetsState {
   currentBet: CurrentBet | undefined,
@@ -58,8 +60,10 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
     } else if (numbersSelected?.length as number < parseInt(currentBetGame?.max_number as string)) {
       state.currentBet?.numbersSelected.push(action.payload as string);
     } else {
-      window.alert(`Vocês já selecionou ${currentBetGame?.max_number} números, quantidade máxima para o` +
-        ` jogo ${currentBetGame?.type}.`)
+      toast.warn(`Vocês já selecionou ${currentBetGame?.max_number} números, quantidade máxima para o` +
+        ` jogo ${currentBetGame?.type}.`, {
+        position: "top-center"
+      });
     }
     return ({
       currentBet: state.currentBet,
@@ -145,7 +149,11 @@ const NewGame = () => {
   }
 
   function handleAddToCart() {
-    if (betsState.currentBet?.numbersSelected.length === betsState.currentBet?.game?.max_number) {
+
+    const { numbersSelected } = betsState.currentBet as CurrentBet;
+    const { currentBet } = betsState;
+
+    if (numbersSelected.length === parseInt(currentBet?.game?.max_number as string)) {
       const bet: Bet = {
         choosen_numbers: betsState.currentBet?.numbersSelected
           .sort((a, b) => parseInt(a) - parseInt(b)).join(', ') as string,
@@ -157,7 +165,16 @@ const NewGame = () => {
         user_id: user?.id as number
       }
       dispatchCart(addBet(bet));
-      dispatchBets({ type: 'CLEAR' })
+      dispatchBets({ type: 'CLEAR' });
+      toast.success(`Aposta adicionada ao carrinho!
+      Números selecionados: ${currentBet?.numbersSelected.join(', ')}`)
+    } else {
+      const maxNumber = parseInt(betsState.currentBet?.game?.max_number as string);
+      const numbersLeft = maxNumber - (betsState.currentBet?.numbersSelected.length as number)
+      toast.warn(`Você ainda não selecionou ${maxNumber} números. ` +
+        `Ainda resta${numbersLeft > 1 ? 'm' : ''} ${numbersLeft} número${numbersLeft > 1 ? 's' : ''}.`, {
+        position: "top-center"
+      });
     }
   }
 
@@ -200,7 +217,7 @@ const NewGame = () => {
           </Button>
           <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
             selected={true} attributes={{ onClick: handleAddToCart }}>
-            Add to cart
+            <ShoppingCart size={20} weight='bold' /> Add to cart
           </Button>
 
         </div>

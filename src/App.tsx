@@ -7,23 +7,22 @@ import ResetPassword from 'components/ResetPassword/ResetPassword'
 import HomePage from 'pages/HomePage/HomePage'
 import RecentGames from 'components/RecentGames/RecentGames'
 import NewGame from 'components/NewGame/NewGame'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { useAppDispatch } from 'store/hooks'
 import { login } from 'store/auth-slice'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { axiosBase } from 'api/AxiosConfig'
 import User from 'types/User'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 function App() {
 
   const token = JSON.parse(localStorage.getItem('token') as string);
-  const hasToken = !!token;
-  const isLoggedIn = hasToken;
-  // console.log(isLoggedIn)
+  const isLoggedIn = !!token;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
-  useEffect(() => {
 
+  useEffect(() => {
 
     if (!token) {
       return;
@@ -46,8 +45,7 @@ function App() {
           token: token
         };
         dispatch(login(user));
-        
-        //console.log(isLoggedIn)
+
       }
       catch (e) {
 
@@ -56,20 +54,23 @@ function App() {
   }, [])
 
   return (
-    <Routes>
-      {isLoggedIn ?
-        <Route path='/' element={<HomePage />}>
-          <Route index element={<RecentGames />} />
-          <Route path='/new-game' element={<NewGame />} />
-        </Route>
-        :
-        <Route path='/' element={<InitialPage />}>
-          <Route index element={<SignIn />} />
-          <Route path='/signup' element={<SignUp />} />
-          <Route path='/reset' element={<ResetPassword />} />
-        </Route>
-      }
-    </Routes>
+    <>
+      <ToastContainer />
+      <Routes>
+        {isLoggedIn ?
+          <Route path='/' element={<HomePage />}>
+            <Route index element={<RecentGames />} />
+            <Route path='/new-game' element={<NewGame />} />
+          </Route>
+          :
+          <Route path='/' element={<InitialPage />}>
+            <Route index element={<SignIn />} />
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/reset' element={<ResetPassword />} />
+          </Route>
+        }
+      </Routes>
+    </>
   )
 }
 

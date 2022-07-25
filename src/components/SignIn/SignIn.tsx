@@ -29,7 +29,6 @@ const SignIn = () => {
             });
 
             const { data } = response;
-            console.log('data: ', data)
             const user: User = { id: data.user.id, token: data.token}; 
             console.log(user)
             dispatch(login(user))
