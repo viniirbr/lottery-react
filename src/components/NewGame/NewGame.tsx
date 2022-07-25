@@ -205,7 +205,8 @@ const NewGame = () => {
 
         </div>
       </section>
-      {window.innerWidth > 700 && <Cart bets={bets} minCartValue={30}/>}
+      {window.innerWidth > 700 && <Cart bets={bets}
+        minCartValue={useAppSelector(state => state.cart.minCartValue)} />}
     </NewGameWrapper>
   )
 }
