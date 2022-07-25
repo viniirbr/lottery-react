@@ -5,8 +5,9 @@ import { ArrowRight } from 'phosphor-react'
 import { useAppDispatch, useAppSelector } from "store/hooks"
 import { axiosBase } from "api/AxiosConfig"
 import { clearCart } from "store/cart-slice"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { BeatLoader } from 'react-spinners'
+import { toast } from 'react-toastify'
 
 interface Props {
   bets: Bet[],
@@ -16,21 +17,17 @@ interface Props {
 function Cart({ bets, minCartValue }: Props) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [betsSavedMessage, setBetsSavedMessage] = useState<string>('');
 
-  let total = undefined;
+  let totalFormated: string | undefined = undefined;
   let isMoreThanMinCartValue = false;
   const minCartValueFormated = minCartValue.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
   const token = useAppSelector(state => state.auth.user?.token.token);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    setBetsSavedMessage('')
-  }, [])
-
   if (bets.length !== 0) {
-    total = bets.map(bet => bet.price).reduce((acumulator, current) => acumulator + current);
+    const total = bets.map(bet => bet.price).reduce((acumulator, current) => acumulator + current);
     isMoreThanMinCartValue = total >= minCartValue;
+    totalFormated = total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
   }
 
   async function handleSaveGame() {
@@ -46,10 +43,11 @@ function Cart({ bets, minCartValue }: Props) {
         }
       });
       dispatch(clearCart());
-      setBetsSavedMessage("Apostas salvas!")
+      toast.success(`Apostas salvas com sucesso!
+      Valor total: ${totalFormated}`);
 
     } catch (e) {
-      setBetsSavedMessage("Ocorreu um erro ao salvar as apostas.")
+      toast.error("Ocorreu um erro ao salvar as apostas.")
     } finally {
       setIsLoading(false);
     }
@@ -61,12 +59,11 @@ function Cart({ bets, minCartValue }: Props) {
       <main>
         <h3>CART</h3>
         <ul>
-          {bets.length === 0 && !betsSavedMessage && <p>Não há apostas no carrinho</p>}
-          {bets.length === 0 && betsSavedMessage && <p>{betsSavedMessage}</p>}
+          {bets.length === 0 && <p>Não há apostas no carrinho</p>}
           {bets.length !== 0 && bets.map((bet, id) => <CartItem key={id} bet={bet} />)}
         </ul>
         {bets.length !== 0 &&
-          <h3>CART TOTAL: {total?.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</h3>}
+          <h3>CART TOTAL: {totalFormated}</h3>}
         {bets.length !== 0 && !isMoreThanMinCartValue &&
           <p>{`The minimal cart value is ${minCartValueFormated}`}</p>}
       </main>
