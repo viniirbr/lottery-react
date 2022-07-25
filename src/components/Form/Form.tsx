@@ -13,8 +13,8 @@ interface Props {
     exitRoute: string,
     className: string,
     isLoading: boolean,
-    exitRouteFoward?: boolean
-    handleSubmit: (event: FormEvent) => void
+    exitRouteFoward: boolean
+    handleSubmit: any
 }
 
 const Form: FC<Props> = ({ title, children, submitButtonTitle, exitButtonTitle, exitRoute, className,

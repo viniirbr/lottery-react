@@ -3,7 +3,7 @@ import styled from "styled-components";
 const InitialPageWrapper = styled.main`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 100vh;
   text-align: center;
   padding: 30px 50px;

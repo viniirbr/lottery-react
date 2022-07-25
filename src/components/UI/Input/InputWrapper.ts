@@ -20,6 +20,7 @@ const InputWrapper = styled.div<Props>`
         border-bottom: 2px #EBEBEB solid;
         padding: 20px 16px;
         font-weight: normal;
+        font-size: 1rem;
         color: #707070;
     }
 

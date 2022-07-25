@@ -34,6 +34,12 @@ const FormWrapper = styled.form<Props>`
         align-items: center;
         gap: 5px;
     }
+
+    & > div > p {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
 `
 
 export default FormWrapper;
