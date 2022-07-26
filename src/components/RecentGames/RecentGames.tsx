@@ -14,8 +14,8 @@ function RecentGames() {
 
   const [bets, setBets] = useState<Bet[]>([]);
   const [filter, setFilter] = useState<string>('');
-  const token = useAppSelector(state => state.auth.user?.token.token);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const token = useAppSelector(state => state.auth.user?.token.token);
 
   useEffect(() => {
 
@@ -44,8 +44,9 @@ function RecentGames() {
       }
 
     }
-
-    fetchData();
+    if (token) {
+      fetchData();
+    }
   }, [token]);
 
   const gameTypesWithDuplicates = bets?.map(bet => bet.type) as Game[];

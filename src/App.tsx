@@ -75,12 +75,14 @@ function App() {
           <Route path='/' element={<HomePage />}>
             <Route index element={<RecentGames />} />
             <Route path='/new-game' element={<NewGame />} />
+            <Route path='*' element={<p>Essa rota não existe</p>} />
           </Route>
           :
           <Route path='/' element={<InitialPage />}>
             <Route index element={<SignIn />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/reset' element={<ResetPassword />} />
+            <Route path='*' element={<SignIn />} />
           </Route>
         }
       </Routes>
