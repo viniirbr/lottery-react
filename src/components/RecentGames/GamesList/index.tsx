@@ -1,6 +1,6 @@
 import Bet from "types/Bet"
-import BetItem from "./BetItem/BetItem"
-import BetsListWrapper from "./BetsListWrapper"
+import BetItem from "../BetItem"
+import BetsListWrapper from "./styles"
 
 interface Props {
   bets?: Bet[],

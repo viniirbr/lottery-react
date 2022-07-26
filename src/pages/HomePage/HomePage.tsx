@@ -1,6 +1,5 @@
 import { axiosBase } from "api/AxiosConfig";
-import CartModal from "components/CartModal/CartModal";
-import Header from "components/Header/Header"
+import { CartModal, Header } from 'components/index'
 import { useEffect, useState } from "react"
 import { Outlet } from 'react-router-dom'
 import { setMinCartValue } from "store/cart-slice";

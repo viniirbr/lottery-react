@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react"
 import { CSSProperties } from "styled-components"
-import CardWrapper from "./CardWrapper"
+import CardWrapper from "./styles"
 
 interface Props {
     children: ReactNode,

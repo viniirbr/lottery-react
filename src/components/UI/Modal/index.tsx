@@ -21,7 +21,7 @@ z-index: 10;
 background: rgba(0, 0, 0, 0.75);
 `
 
-export const Modal: FC<{ children: ReactNode }> = ({ children }) => {
+const Modal: FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <ModalWrapper>
             {children}
@@ -39,3 +39,5 @@ const ModalWrapper = styled.div`
     background: white;
     border-radius: 10px;
 `
+
+export default Modal;

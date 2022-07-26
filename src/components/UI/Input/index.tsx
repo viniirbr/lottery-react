@@ -1,6 +1,6 @@
 import { FC, InputHTMLAttributes } from "react"
 import { CSSProperties } from "styled-components"
-import InputWrapper from "./InputWrapper"
+import InputWrapper from "./styles"
 
 interface Props {
     label: string,

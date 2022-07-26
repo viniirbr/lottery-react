@@ -1,7 +1,6 @@
-import { axiosBase } from "api/AxiosConfig"
-import Form from "components/Form/Form"
-import Input from "components/UI/Input/Input"
 import { useState } from "react"
+import { axiosBase } from "api/AxiosConfig"
+import { Form, Input } from "components"
 import { useForm, Controller } from 'react-hook-form'
 import resetSchema from "schemas/resetSchema"
 import { yupResolver } from '@hookform/resolvers/yup'

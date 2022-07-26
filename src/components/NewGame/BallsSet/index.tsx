@@ -1,5 +1,5 @@
-import Ball from "./Ball/Ball";
-import BallSetWrapper from "./BallSetWrapper";
+import Ball from "../Ball";
+import BallSetWrapper from "./styles";
 
 interface Props {
     ballsCount: number,

@@ -1,6 +1,6 @@
 import { axiosBase } from "api/AxiosConfig";
-import SignInWrapper from "components/SignIn/SignInWrapper"
-import Input from "components/UI/Input/Input"
+import SignInWrapper from "components/SignIn/styles"
+import { Input } from "components"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from 'react-hook-form'

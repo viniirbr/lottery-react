@@ -1,5 +1,5 @@
-import Cart from "components/Cart/Cart";
-import { Backdrop, Modal } from "components/UI/Modal/Modal"
+import Cart from "components/Cart";
+import { Backdrop, Modal } from "components/UI/Modal"
 import ReactDOM from 'react-dom'
 import { useAppSelector } from "store/hooks"
 

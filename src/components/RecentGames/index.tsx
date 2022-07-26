@@ -1,11 +1,11 @@
 import { axiosBase } from 'api/AxiosConfig'
-import Button from 'components/UI/Button/Button';
+import Button from 'components/UI/Button';
 import { useEffect, useState } from 'react'
 import Bet from 'types/Bet'
 import { Link } from 'react-router-dom'
 import Game from 'types/Game';
-import BetsList from './GamesList/BetsList';
-import RecentGamesWrapper from './RecentGamesWrapper';
+import BetsList from './GamesList';
+import RecentGamesWrapper from './styles';
 import { useAppSelector } from 'store/hooks';
 import { ArrowRight } from 'phosphor-react';
 import { BeatLoader } from 'react-spinners';

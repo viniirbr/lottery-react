@@ -1,4 +1,4 @@
-import HeaderWrapper from "./HeaderWrapper"
+import HeaderWrapper from "./styles"
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { login } from "store/auth-slice";

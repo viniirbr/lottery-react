@@ -1,6 +1,6 @@
 import Bet from "types/Bet"
-import CartItem from "./CartItem/CartItem"
-import CartWrapper from "./CartWrapper"
+import CartItem from "./CartItem"
+import CartWrapper from "./styles"
 import { ArrowRight } from 'phosphor-react'
 import { useAppDispatch, useAppSelector } from "store/hooks"
 import { axiosBase } from "api/AxiosConfig"

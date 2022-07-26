@@ -1,6 +1,6 @@
-import Card from "components/UI/Card/Card"
+import { Card } from "components"
 import { FC, ReactNode } from "react"
-import FormWrapper from "./FormWrapper"
+import FormWrapper from "./styles"
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowLeft } from 'phosphor-react'
 import { BeatLoader } from 'react-spinners'

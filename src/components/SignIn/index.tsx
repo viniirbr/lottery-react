@@ -1,7 +1,7 @@
-import Input from "components/UI/Input/Input";
+import { Input } from "components";
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import SignInWrapper from "./SignInWrapper";
+import SignInWrapper from "./styles";
 import { axiosBase } from "api/AxiosConfig";
 import { useAppDispatch } from "store/hooks";
 import { login } from "store/auth-slice";

@@ -1,14 +1,13 @@
 import { useEffect, useReducer, useState } from "react"
 import { axiosBase } from '../../api/AxiosConfig'
 import Game from "types/Game"
-import Button from "components/UI/Button/Button";
-import BallsSet from "./BallsSet/BallsSet";
+import { Button, Cart } from "components";
+import BallsSet from "./BallsSet";
 import { CurrentBet } from "types/CurrentBet";
 import Bet from "types/Bet";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { addBet } from "store/cart-slice";
-import NewGameWrapper from "./NewGameWrapper";
-import Cart from "components/Cart/Cart";
+import NewGameWrapper from "./styles";
 import { ShoppingCart } from 'phosphor-react'
 import { toast } from 'react-toastify'
 

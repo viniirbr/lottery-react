@@ -1,6 +1,6 @@
-import { ButtonHTMLAttributes, HTMLAttributes, ReactNode, useState } from "react"
+import { ButtonHTMLAttributes, ReactNode } from "react"
 import { CSSProperties } from "styled-components"
-import ButtonWrapper from "./ButtonWrapper"
+import ButtonWrapper from "./styles"
 
 interface Props {
   children: ReactNode,

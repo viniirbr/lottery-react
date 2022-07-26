@@ -1,5 +1,4 @@
-import { ReactNode } from "react"
-import BallWrapper from "./BallWrapper"
+import BallWrapper from "./styles"
 
 interface Props {
     children: string,

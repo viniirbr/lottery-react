@@ -1,6 +1,6 @@
 import Bet from "types/Bet";
 import { Trash, Check, X } from 'phosphor-react'
-import CartItemWrapper from "./CartItemWrapper";
+import CartItemWrapper from "./styles";
 import { useState } from "react";
 import { useAppDispatch } from "store/hooks";
 import { removeBet } from "store/cart-slice";
