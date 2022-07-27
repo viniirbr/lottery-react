@@ -1,15 +1,15 @@
 import { useEffect, useReducer, useState } from "react"
-import { axiosBase } from '../../api/AxiosConfig'
-import Game from "types/Game"
+import { gamesService } from '../../shared/services'
 import { Button, Cart } from "components";
 import BallsSet from "./BallsSet";
-import { CurrentBet } from "types/CurrentBet";
-import Bet from "types/Bet";
+import CurrentBet from "../../shared/interfaces/CurrentBet";
+import { Bet } from "shared/interfaces/BetsInterfaces";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { addBet } from "store/cart-slice";
 import NewGameWrapper from "./styles";
 import { ShoppingCart } from 'phosphor-react'
 import { toast } from 'react-toastify'
+import { Game } from "shared/interfaces/GamesInterfaces";
 
 interface BetsState {
   currentBet: CurrentBet | undefined,
@@ -35,7 +35,8 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
       state.incompleteBets.push(state.currentBet as CurrentBet);
     }
 
-    const gameSelected = state.incompleteBets.find(bet => bet?.game?.type === (action.payload as Game)?.type);
+    const gameSelected = state.incompleteBets
+      .find(bet => bet?.game?.type === (action.payload as Game)?.type);
 
     if (gameSelected) {
       return ({
@@ -96,12 +97,13 @@ const NewGame = () => {
   const dispatchCart = useAppDispatch();
   const bets = useAppSelector(state => state.cart.bets);
   const user = useAppSelector(state => state.auth.user);
+  const { listGames } = gamesService()
 
   useEffect(() => {
 
     const fetchGames = async () => {
-      const response = await axiosBase.get('/cart_games');
-      setGamesAvailable(response.data.types);
+      const response = await listGames();
+      setGamesAvailable(response.types);
     }
 
     fetchGames();
@@ -156,13 +158,13 @@ const NewGame = () => {
       const bet: Bet = {
         choosen_numbers: betsState.currentBet?.numbersSelected
           .sort((a, b) => parseInt(a) - parseInt(b)).join(', ') as string,
-        created_at: (new Date()).toDateString(),
         game_id: betsState.currentBet?.game?.id as number,
         id: Math.floor(Math.random() * (500)),
         price: betsState.currentBet?.game?.price as number,
         type: betsState.currentBet?.game as Game,
         user_id: user?.id as number
       }
+      console.log(bet)
       dispatchCart(addBet(bet));
       dispatchBets({ type: 'CLEAR' });
       toast.success(`Aposta adicionada ao carrinho!

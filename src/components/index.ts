@@ -15,9 +15,9 @@ import SignUp from "components/SignUp";
 import Button from "components/UI/Button";
 import Input from "components/UI/Input";
 import Card from "components/UI/Card";
-import Modal from "components/UI/Modal";
+import { Modal, Backdrop } from "components/UI/Modal";
 
 export {
     Ball, BallsSet, BetItem, Cart, CartItem, CartModal, Form, Header, GamesList, NewGame,
-    RecentGames, ResetPassword, SignIn, SignUp, Button, Card, Input, Modal
+    RecentGames, ResetPassword, SignIn, SignUp, Button, Card, Input, Modal, Backdrop
 };

@@ -1,50 +1,52 @@
-import { axiosBase } from 'api/AxiosConfig'
+import { gamesService, betsService } from 'shared/services'
 import Button from 'components/UI/Button';
 import { useEffect, useState } from 'react'
-import Bet from 'types/Bet'
 import { Link } from 'react-router-dom'
-import Game from 'types/Game';
 import BetsList from './GamesList';
 import RecentGamesWrapper from './styles';
 import { useAppSelector } from 'store/hooks';
 import { ArrowRight } from 'phosphor-react';
 import { BeatLoader } from 'react-spinners';
+import { Game } from 'shared/interfaces/GamesInterfaces';
+import { IListBetsResponse } from 'shared/interfaces/BetsInterfaces';
+import { Token } from 'shared/interfaces/AuthInterfaces';
 
 function RecentGames() {
 
-  const [bets, setBets] = useState<Bet[]>([]);
+  const [bets, setBets] = useState<IListBetsResponse>([]);
   const [filter, setFilter] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const token = useAppSelector(state => state.auth.user?.token.token);
+  const token = useAppSelector(state => state.auth);
+  const { listGames } = gamesService();
+  const { listBet } = betsService();
 
   useEffect(() => {
 
     const fetchData = async () => {
 
+      console.log(token)
       try {
         const [betsResponse, gamesResponse] = await Promise.all([
-          axiosBase.get<Bet[]>('/bet/all-bets', {
-            headers: {
-              "Authorization": `Bearer ${token}`
-            }
-          }),
-          axiosBase.get<{ min_cart_value: number, types: Game[] }>('/cart_games')
+          await listBet(token.token?.token as string),
+          await listGames()
         ]);
 
-        const gamesAvailable = gamesResponse.data.types;
+        const gamesAvailable = gamesResponse.types;
 
-        const bets = betsResponse.data.map(bet => {
+        const bets = betsResponse.map(bet => {
           return { ...bet, type: gamesAvailable.find(game => game.type === bet.type.type) as Game };
         });
 
         setBets(bets);
       } catch (e) {
+
       } finally {
         setIsLoading(false);
       }
 
     }
-    if (token) {
+
+    if (token.token) {
       fetchData();
     }
   }, [token]);

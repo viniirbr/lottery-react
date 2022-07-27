@@ -1,24 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import Game from 'types/Game';
-import User from 'types/User';
+import { Token } from 'shared/interfaces/AuthInterfaces';
 
 interface AuthState {
-    user: User | undefined,
+    token: Token | undefined
 }
 
 const initialState: AuthState = {
-    user: undefined,
+    token: undefined
 }
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login(state, action: PayloadAction<User | boolean | undefined>) {
-            state.user = action.payload as User;
-        }    
+        login(state, action: PayloadAction<Token>) {
+            state.token = action.payload;
+        },
+        logout(state) {
+            state.token = undefined;
+        }
     }
 });
 
-export const { login } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;

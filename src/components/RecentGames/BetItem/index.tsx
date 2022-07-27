@@ -1,4 +1,4 @@
-import Bet from "types/Bet"
+import Bet from "shared/interfaces/Bet"
 import BetItemWrapper from "./styles"
 
 interface Props {

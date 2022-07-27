@@ -2,15 +2,15 @@ import { Input } from "components";
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import SignInWrapper from "./styles";
-import { axiosBase } from "api/AxiosConfig";
 import { useAppDispatch } from "store/hooks";
 import { login } from "store/auth-slice";
-import User from "types/User";
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import signInSchema from "schemas/signInSchema";
 import { AxiosError } from "axios";
 import { toast } from 'react-toastify';
+import auth from '../../shared/services/auth'
+import { Token } from "shared/interfaces/AuthInterfaces";
 
 type FormData = {
     email: string,
@@ -18,7 +18,7 @@ type FormData = {
 }
 
 const SignIn = () => {
-    
+
     const [isLoading, setIsloading] = useState<boolean>(false);
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: yupResolver(signInSchema)
@@ -26,21 +26,18 @@ const SignIn = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { login: loginUser } = auth();
 
     const handleSignInSubmit = async (data: FormData) => {
         setIsloading(true);
         const { email, password } = data;
         try {
-
-            const response = await axiosBase.post('/login', {
+            const loginResponse = await loginUser({
                 "email": email,
                 "password": password
             });
-
-            const { data } = response;
-            const user: User = { id: data.user.id, token: data.token };
-            dispatch(login(user))
-            localStorage.setItem('token', JSON.stringify(user.token));
+            dispatch(login(loginResponse.token as Token))
+            localStorage.setItem('token', JSON.stringify(loginResponse.token));
             navigate('/')
 
         } catch (e) {

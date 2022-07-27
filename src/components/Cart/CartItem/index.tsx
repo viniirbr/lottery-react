@@ -1,4 +1,4 @@
-import Bet from "types/Bet";
+import Bet from "shared/interfaces/Bet";
 import { Trash, Check, X } from 'phosphor-react'
 import CartItemWrapper from "./styles";
 import { useState } from "react";

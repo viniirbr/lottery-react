@@ -1,4 +1,4 @@
-import Bet from "types/Bet";
+import { Bet } from "shared/interfaces/BetsInterfaces";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface CartState {

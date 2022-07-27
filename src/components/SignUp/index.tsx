@@ -1,4 +1,4 @@
-import { axiosBase } from "api/AxiosConfig";
+import { user } from "shared/services";
 import SignInWrapper from "components/SignIn/styles"
 import { Input } from "components"
 import { useState } from "react"
@@ -22,18 +22,19 @@ const SignUp = () => {
     resolver: yupResolver(signUpSchema)
   });
   const navigate = useNavigate();
+  const { createUser } = user();
 
   const handleSignUpSubmit = async (data: FormData) => {
     setIsloading(true);
     const { name, email, password } = data;
     try {
-      const response = await axiosBase.post('/user/create', {
+      const response = await createUser({
         "name": name, "email": email, "password": password
       });
       toast.success('Usuário cadastrado com sucesso!')
       navigate('/');
     } catch (error) {
-        toast.error('Ocorreu um erro no cadastro do usuário')
+      toast.error('Ocorreu um erro no cadastro do usuário')
     } finally {
       setIsloading(false);
     }

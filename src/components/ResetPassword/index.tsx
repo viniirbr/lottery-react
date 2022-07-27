@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { axiosBase } from "api/AxiosConfig"
+import { auth } from "shared/services"
 import { Form, Input } from "components"
 import { useForm, Controller } from 'react-hook-form'
 import resetSchema from "schemas/resetSchema"
@@ -16,16 +16,15 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { control, handleSubmit, formState: { errors }, resetField } = useForm<FormData>({
     resolver: yupResolver(resetSchema)
-  })
+  });
+  const { reset } = auth();
 
 
   const handleResetPassword = async (data: FormData) => {
     setIsLoading(true);
     const { email } = data;
     try {
-      const response = await axiosBase.post('/reset', {
-        "email": email
-      });
+      const response = await reset({ "email": email });
       toast.success("Email enviado com sucesso");
       resetField('email')
     } catch (e) {

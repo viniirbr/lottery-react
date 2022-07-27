@@ -21,7 +21,7 @@ const Form: FC<Props> = ({ title, children, submitButtonTitle, exitButtonTitle, 
     isLoading, exitRouteFoward, handleSubmit }) => {
 
     return (
-        <FormWrapper className={className} onSubmit={handleSubmit}>
+        <FormWrapper className={className} onSubmit={handleSubmit} noValidate={true}>
             <h2>{title}</h2>
             <Card hasShadow={true} styles={{ width: '100%', margin: '20px 0' }}>
                 {children}

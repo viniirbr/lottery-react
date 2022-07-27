@@ -1,4 +1,4 @@
-import Form from "components/Form";
+import { Form } from "components";
 import styled from "styled-components";
 
 const SignInWrapper = styled(Form)`

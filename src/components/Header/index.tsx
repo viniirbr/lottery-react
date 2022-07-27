@@ -1,7 +1,7 @@
 import HeaderWrapper from "./styles"
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { login } from "store/auth-slice";
+import { logout } from "store/auth-slice";
 import { ShoppingCart, ArrowRight } from 'phosphor-react'
 import { FC } from "react";
 import { clearCart } from "store/cart-slice";
@@ -18,7 +18,7 @@ const Header: FC<Props> = ({ showCartModal }) => {
 
     function handleLogout() {
         localStorage.removeItem('token');
-        dispatch(login(undefined));
+        dispatch(logout());
         dispatch(clearCart())
         navigate('/');
     }
