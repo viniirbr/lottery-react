@@ -28,13 +28,16 @@ const SignUp = () => {
     setIsloading(true);
     const { name, email, password } = data;
     try {
-      const response = await createUser({
+      await createUser({
         "name": name, "email": email, "password": password
       });
       toast.success('Usuário cadastrado com sucesso!')
       navigate('/');
-    } catch (error) {
-      toast.error('Ocorreu um erro no cadastro do usuário')
+    } catch (error: any) {
+      if (error.status === 400) {
+        return toast.error("Email já existe.");
+      }
+      toast.error('Ocorreu um erro. Verifique sua conexão.');
     } finally {
       setIsloading(false);
     }

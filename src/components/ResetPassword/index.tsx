@@ -27,14 +27,12 @@ const ResetPassword = () => {
       const response = await reset({ "email": email });
       toast.success("Email enviado com sucesso");
       resetField('email')
-    } catch (e) {
-      console.log(e)
-      const error = e as AxiosError;
-      if (error.response?.status === 404) {
+    } catch (error: any) {
+      if (error.status === 404) {
         toast.error('O email inserido não existe.');
         return;
       }
-      toast.error('Ocorreu um erro inesperado.')
+      toast.error('Ocorreu um erro inesperado. Verifique sua conexão.')
     } finally {
       setIsLoading(false);
     }

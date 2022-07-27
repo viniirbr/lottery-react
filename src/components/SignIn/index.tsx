@@ -40,11 +40,9 @@ const SignIn = () => {
             localStorage.setItem('token', JSON.stringify(loginResponse.token));
             navigate('/')
 
-        } catch (e) {
-            const error = e as AxiosError;
-            if (error.response?.status === 401) {
-                toast.error('Email ou senha inválidos.');
-                return;
+        } catch (error: any) {
+            if (error.status === 401) {
+                return toast.error('Email ou senha inválidos.');
             }
             toast.error('Ocorreu um erro na sua requisição.');
         } finally {

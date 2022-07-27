@@ -17,16 +17,20 @@ instance.interceptors.request.use(async (config) => {
     }
 
     return config;
-}, (error: AxiosError) => Promise.reject(error));
+}, (error: AxiosError) => {
+    return Promise.reject(error);
+});
 
 instance.interceptors.response.use(async (response) => {
-    console.log(response);
     return response.data;
 }, (error: AxiosError) => {
+
     if (error.response) {
-        return error.response.data;
+        const handledError = error.response;
+        return Promise.reject(handledError);
     }
-    return error;
+
+    return Promise.reject(error);
 });
 
 export default instance;
