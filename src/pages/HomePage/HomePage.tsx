@@ -14,12 +14,11 @@ function HomePage() {
   const { listGames } = gamesService();
 
   useEffect(() => {
-
     getMinCartValue();
-
+    
     async function getMinCartValue() {
-      const response = await listGames();
-      dispatch(setMinCartValue(response.min_cart_value));
+      // const response = await listGames();
+      dispatch(setMinCartValue(30));
     }
   }, [])
 

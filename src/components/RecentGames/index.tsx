@@ -1,4 +1,4 @@
-import { gamesService, betsService } from 'shared/services'
+import { gamesService, betsService, instance } from 'shared/services'
 import Button from 'components/UI/Button';
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -10,38 +10,31 @@ import { BeatLoader } from 'react-spinners';
 import { Game } from 'shared/interfaces/GamesInterfaces';
 import { Bet, IListBetsResponse } from 'shared/interfaces/BetsInterfaces';
 import { Token } from 'shared/interfaces/AuthInterfaces';
+import axios from 'axios';
 
 function RecentGames() {
 
   const [bets, setBets] = useState<Bet[]>([]);
-  const [filter, setFilter] = useState<string[]>([]);
+  const [filters, setFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [gamesAvailable, setGamesAvailable] = useState<Game[]>([]);
   const token = useAppSelector(state => state.auth.token);
   const { listGames } = gamesService();
   const { listBet } = betsService();
-  const params = new URLSearchParams();
 
   useEffect(() => {
 
     const fetchData = async () => {
-
-      console.log('aaaa')
 
       try {
         const [betsResponse, gamesResponse] = await Promise.all([
           listBet(token?.token as string),
           listGames()
         ]);
-        console.log(betsResponse)
-        console.log(gamesResponse)
+
         setGamesAvailable(gamesResponse.types);
-        const betsWithColor = betsResponse.map(bet => {
-          const color = gamesResponse.types.find(game => game.id === bet.type.id)?.color;
-          bet.type.color = color;
-          return bet;
-        })
-        setBets(betsWithColor);
+        setBets(betsResponse);
+
       } catch (e) {
         console.log('erro')
       } finally {
@@ -50,29 +43,31 @@ function RecentGames() {
 
     }
 
-    if (token?.token) {
+    if (token) {
       fetchData();
     }
-  }, [token?.token]);
+  }, [token]);
 
-  async function addFilter(type: string) {
-    if (filter.includes(type)) {
-      const newFilter = [...filter];
-      newFilter.splice(filter.indexOf(type), 1);
-      setFilter(newFilter);
-    } else {
-      setFilter([...filter as string[], type]);
+  useEffect(() => {
+
+    getFilteredBets();
+
+    async function getFilteredBets() {
+      const betsResponse = await listBet(token?.token as string, filters);
+      setBets(betsResponse)
     }
-    filter.forEach(filter => params.append('type%5B%5D', filter));
-    const betsResponse = await listBet(token?.token as string, params);
-    console.log(betsResponse)
-    const betsWithColor = betsResponse.map(bet => {
-      const color = gamesAvailable.find(game => game.id === bet.type.id)?.color
-      console.log(color)
-      bet.type.color = color;
-      return bet;
-    })
-    setBets(betsWithColor);
+
+  }, [filters])
+
+
+  function addFilter(type: string) {
+    if (filters.includes(type)) {
+      const newFilter = [...filters];
+      newFilter.splice(filters.indexOf(type), 1);
+      setFilters(newFilter);
+    } else {
+      setFilters([...filters as string[], type]);
+    }
   }
 
   const filterButtons = gamesAvailable.map(({ type, color, id }) =>
@@ -80,7 +75,7 @@ function RecentGames() {
       key={id}
       themeColor={color}
       attributes={{ onClick: () => addFilter(type) }}
-      selected={false}>
+      selected={filters.includes(type)}>
       {type}
     </Button>);
 

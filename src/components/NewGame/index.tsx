@@ -96,7 +96,7 @@ const NewGame = () => {
   const [betsState, dispatchBets] = useReducer(betsReducer, { currentBet: undefined, incompleteBets: [] });
   const dispatchCart = useAppDispatch();
   const bets = useAppSelector(state => state.cart.bets);
-  const user = useAppSelector(state => state.auth.user);
+  const user = useAppSelector(state => state.auth);
   const { listGames } = gamesService()
 
   useEffect(() => {
@@ -162,7 +162,6 @@ const NewGame = () => {
         id: Math.floor(Math.random() * (500)),
         price: betsState.currentBet?.game?.price as number,
         type: betsState.currentBet?.game as Game,
-        user_id: user?.id as number
       }
       console.log(bet)
       dispatchCart(addBet(bet));

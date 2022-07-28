@@ -23,18 +23,6 @@ function BetItem({ bet }: Props) {
     return number;
   }).join(', ');
 
-  useEffect(() => {
-
-    if (gamesAvailable) {
-      fetchGames();
-    }
-
-    async function fetchGames() {
-      const response = await listGames();
-      setGamesAvailable(response.types);
-    }
-  }, [gamesAvailable]);
-
   return (
     <BetItemWrapper color={bet.type.color as string}>
       <h3>{choosenNumbersFormated}</h3>

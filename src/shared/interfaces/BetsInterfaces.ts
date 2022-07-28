@@ -12,7 +12,7 @@ export interface INewBetResponse {
 
 export interface Bet {
     id: number,
-    user_id: number,
+    user_id?: number,
     game_id: number,
     choosen_numbers: string,
     price: number,
