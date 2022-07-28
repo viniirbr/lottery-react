@@ -96,7 +96,6 @@ const NewGame = () => {
   const [betsState, dispatchBets] = useReducer(betsReducer, { currentBet: undefined, incompleteBets: [] });
   const dispatchCart = useAppDispatch();
   const bets = useAppSelector(state => state.cart.bets);
-  const user = useAppSelector(state => state.auth);
   const { listGames } = gamesService();
 
   useEffect(() => {
@@ -114,6 +113,10 @@ const NewGame = () => {
       dispatchBets({ type: 'CHANGE-GAME', payload: gamesAvailable[0] });
     }
   }, [gamesAvailable]);
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(bets));
+  }, [bets]);
 
   function handleBallClicked(ballNumber: string) {
     dispatchBets({ type: 'NUMBER-SELECTED', payload: ballNumber });

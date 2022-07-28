@@ -28,9 +28,12 @@ const cartSlice = createSlice({
         },
         setMinCartValue(state: CartState, action: PayloadAction<number>) {
             state.minCartValue = action.payload;
+        },
+        recoverCartValues(state: CartState, action: PayloadAction<Bet[]>) {
+            state.bets = action.payload;
         }
     }
 })
 
-export const { addBet, removeBet, clearCart, setMinCartValue } = cartSlice.actions;
+export const { addBet, removeBet, clearCart, setMinCartValue, recoverCartValues } = cartSlice.actions;
 export default cartSlice.reducer;

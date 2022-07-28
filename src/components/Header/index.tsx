@@ -3,8 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { logout } from "store/auth-slice";
 import { ShoppingCart, ArrowRight } from 'phosphor-react'
-import { FC } from "react";
-import { clearCart } from "store/cart-slice";
+import { FC, useEffect } from "react";
+import { clearCart, recoverCartValues } from "store/cart-slice";
+import { Bet } from "shared/interfaces/BetsInterfaces";
 
 interface Props {
     showCartModal: (show: boolean) => void
@@ -14,12 +15,21 @@ const Header: FC<Props> = ({ showCartModal }) => {
     const { pathname } = useLocation();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const bets = useAppSelector(state => state.cart.bets)
+    const bets = useAppSelector(state => state.cart.bets);
+
+    useEffect(() => {
+      if (localStorage.getItem('cart')) {
+        dispatch(recoverCartValues(JSON.parse(localStorage.getItem('cart') as string) as Bet[]));
+      }
+    
+    }, [])
+    
 
     function handleLogout() {
         localStorage.removeItem('token');
         dispatch(logout());
-        dispatch(clearCart())
+        dispatch(clearCart());
+        localStorage.removeItem('cart');
         navigate('/');
     }
 
