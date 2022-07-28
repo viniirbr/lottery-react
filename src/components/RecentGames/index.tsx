@@ -17,6 +17,7 @@ function RecentGames() {
   const [bets, setBets] = useState<Bet[]>([]);
   const [filters, setFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoadingBets, setIsLoadingBets] = useState<boolean>(false);
   const [gamesAvailable, setGamesAvailable] = useState<Game[]>([]);
   const [noBets, setNoBets] = useState<boolean>(false);
   const token = useAppSelector(state => state.auth.token);
@@ -57,11 +58,13 @@ function RecentGames() {
     getFilteredBets();
 
     async function getFilteredBets() {
+      setIsLoadingBets(true);
       const betsResponse = await listBet(token?.token as string, filters);
-      setBets(betsResponse)
+      setBets(betsResponse);
+      setIsLoadingBets(false);
     }
 
-  }, [filters])
+  }, [filters, token])
 
 
   function addFilter(type: string) {
@@ -89,17 +92,18 @@ function RecentGames() {
       <header>
         <div>
           <h2>RECENT GAMES</h2>
-          {!isLoading && !noBets && <div>
-            <p>Filters</p>
+          {!isLoading && !noBets &&
             <div>
-              {filterButtons}
-            </div>
-          </div>}
+              <p>Filters</p>
+              <div>
+                {filterButtons}
+              </div>
+            </div>}
         </div>
         {window.innerWidth > 700 &&
           <Link to='/new-game'><h3>New Bet<ArrowRight size={32} color='#B5C401' /></h3></Link>}
       </header>
-      {!isLoading && bets.length !== 0 && <BetsList bets={bets} />}
+      {!isLoading && bets.length !== 0 && <BetsList bets={bets} isLoading={isLoadingBets}/>}
       {!isLoading && noBets && <p>Não há apostas recentes. Que tal criar uma
         <Link to='/new-game'> nova aposta</Link>?</p>}
       {!isLoading && bets.length === 0 &&

@@ -2,7 +2,7 @@ import HeaderWrapper from "./styles"
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { logout } from "store/auth-slice";
-import { ShoppingCart, ArrowRight } from 'phosphor-react'
+import { ShoppingCart, ArrowRight, SignOut } from 'phosphor-react'
 import { FC, useEffect } from "react";
 import { clearCart, recoverCartValues } from "store/cart-slice";
 import { Bet } from "shared/interfaces/BetsInterfaces";
@@ -18,12 +18,12 @@ const Header: FC<Props> = ({ showCartModal }) => {
     const bets = useAppSelector(state => state.cart.bets);
 
     useEffect(() => {
-      if (localStorage.getItem('cart')) {
-        dispatch(recoverCartValues(JSON.parse(localStorage.getItem('cart') as string) as Bet[]));
-      }
-    
+        if (localStorage.getItem('cart')) {
+            dispatch(recoverCartValues(JSON.parse(localStorage.getItem('cart') as string) as Bet[]));
+        }
+
     }, [])
-    
+
 
     function handleLogout() {
         localStorage.removeItem('token');
@@ -42,11 +42,11 @@ const Header: FC<Props> = ({ showCartModal }) => {
                 </ul>
                 <ul>
                     <li><h2><Link to='/'>Account</Link></h2></li>
-                    <li onClick={handleLogout}><h2>Log out{window.innerWidth > 700 &&
-                        <ArrowRight size={20}/>}</h2></li>
                     {window.innerWidth < 700 && <li onClick={() => showCartModal(true)}>
                         <ShoppingCart size={32} />
                         <span>{bets.length}</span></li>}
+                    <li onClick={handleLogout}>{window.innerWidth < 700 ? <SignOut size={32}/>
+                        : <h2>Log out<ArrowRight size={20} /></h2>}</li>
                 </ul>
             </nav>
         </HeaderWrapper>

@@ -13,7 +13,7 @@ const RecentGamesWrapper = styled.section`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 80px;
+        width: 100%;
         width: 100%;
     }
 
@@ -29,6 +29,7 @@ const RecentGamesWrapper = styled.section`
     & > header > div > div > div {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
     }
 
     & header div p {
@@ -50,7 +51,7 @@ const RecentGamesWrapper = styled.section`
         & > header > div {
             gap: 30px;
         }
-
+        
         & header h3 {
             display: flex;
             align-items: center;
@@ -62,11 +63,11 @@ const RecentGamesWrapper = styled.section`
             display: flex;
             align-items: center;
         }
-
+        
         & > header > div > div {
-        display: flex;
-        flex-direction: row;
-    }
+            display: flex;
+            flex-direction: row;
+        }
     }
 
     @media screen and (min-width: 700px) {
