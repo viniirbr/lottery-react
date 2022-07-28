@@ -19,7 +19,7 @@ function Cart({ bets, minCartValue }: Props) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  let totalFormated: string | undefined = undefined;
+  let totalFormated: string | undefined = convertToMonetaryValue(0);
   let isMoreThanMinCartValue = false;
   const minCartValueFormated = convertToMonetaryValue(minCartValue);
   const token = useAppSelector(state => state.auth.token);
@@ -60,8 +60,7 @@ function Cart({ bets, minCartValue }: Props) {
           {bets.length === 0 && <p>Não há apostas no carrinho</p>}
           {bets.length !== 0 && bets.map((bet, id) => <CartItem key={id} bet={bet} />)}
         </ul>
-        {bets.length !== 0 &&
-          <h3>CART TOTAL: {totalFormated}</h3>}
+          <h3>CART TOTAL: {totalFormated}</h3>
         {bets.length !== 0 && !isMoreThanMinCartValue &&
           <p>{`The minimal cart value is ${minCartValueFormated}`}</p>}
       </main>
