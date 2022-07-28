@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode,
   themeColor?: string,
   styles?: CSSProperties,
-  selected?: string | boolean,
+  selected?: boolean,
   attributes?: ButtonHTMLAttributes<HTMLButtonElement>
 }
 

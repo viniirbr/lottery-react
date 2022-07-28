@@ -1,4 +1,8 @@
-import Bet from "shared/interfaces/Bet"
+import { useEffect, useState } from "react";
+import { convertToMonetaryValue } from "shared/helpers";
+import { Bet } from "shared/interfaces/BetsInterfaces"
+import { Game } from "shared/interfaces/GamesInterfaces";
+import { gamesService } from 'shared/services'
 import BetItemWrapper from "./styles"
 
 interface Props {
@@ -7,7 +11,9 @@ interface Props {
 
 function BetItem({ bet }: Props) {
 
-  const date = new Date(bet.created_at);
+  const [gamesAvailable, setGamesAvailable] = useState<Game[]>([]);
+  const { listGames } = gamesService();
+  const date = new Date(bet.created_at?.toString() as string);
   const formatedDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
   const choosenNumbersFormated = bet.choosen_numbers.split(',').map(number => {
     if (parseInt(number) < 10) {
@@ -17,11 +23,23 @@ function BetItem({ bet }: Props) {
     return number;
   }).join(', ');
 
+  useEffect(() => {
+
+    if (gamesAvailable) {
+      fetchGames();
+    }
+
+    async function fetchGames() {
+      const response = await listGames();
+      setGamesAvailable(response.types);
+    }
+  }, [gamesAvailable]);
+
   return (
     <BetItemWrapper color={bet.type.color as string}>
       <h3>{choosenNumbersFormated}</h3>
-      <p>{`${formatedDate} - (${bet.price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })})`}</p>
-      <h2 style={{ color: bet.type.color }}>{bet.type.type}</h2>
+      <p>{`${formatedDate} - (${convertToMonetaryValue(bet.price)})`}</p>
+      <h2 style={{ color: bet.type.color as string }}>{bet.type.type}</h2>
     </BetItemWrapper>
   )
 }

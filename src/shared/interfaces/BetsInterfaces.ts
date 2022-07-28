@@ -19,6 +19,7 @@ export interface Bet {
     created_at?: Date,
     type: {
         id: number,
-        type: string
+        type: string,
+        color?: string
     }
 }

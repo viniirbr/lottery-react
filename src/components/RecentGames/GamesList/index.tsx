@@ -1,21 +1,15 @@
-import Bet from "shared/interfaces/Bet"
+import { Bet } from "shared/interfaces/BetsInterfaces"
 import BetItem from "../BetItem"
 import BetsListWrapper from "./styles"
 
 interface Props {
   bets?: Bet[],
-  filterBets: string
 }
 
-function BetsList({ bets, filterBets }: Props) {
+function BetsList({ bets }: Props) {
   return (
     <BetsListWrapper>
-      {bets?.filter(bet => {
-        if (filterBets !== '') {
-          return filterBets === bet.type.type
-        }
-        return true;
-      }).map((bet, id) => <BetItem key={id} bet={bet} />)}
+      {bets?.map((bet, id) => <BetItem key={id} bet={bet} />)}
     </BetsListWrapper>
   )
 }
