@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 function HomePage() {
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const token = useAppSelector(state => state.auth.token);
   const dispatch = useAppDispatch();
   const minCartValue = useAppSelector(state => state.cart.minCartValue);
   const { listGames } = gamesService();
@@ -17,8 +16,8 @@ function HomePage() {
     getMinCartValue();
     
     async function getMinCartValue() {
-      // const response = await listGames();
-      dispatch(setMinCartValue(30));
+      const response = await listGames();
+      dispatch(setMinCartValue(response.min_cart_value));
     }
   }, [])
 
