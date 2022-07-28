@@ -43,7 +43,8 @@ export interface IResetResponse {
 }
 
 export interface IChangePasswordRequest {
-    email: string
+    token: string,
+    password: string
 }
 
 export interface IChangePasswordResponse {

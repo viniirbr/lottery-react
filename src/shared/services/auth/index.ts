@@ -13,7 +13,7 @@ const auth = () => {
     }
     
     async function changePassword(token: IChangePasswordRequest): Promise<IChangePasswordResponse> {
-        return instance.post(`/reset/${token}`);
+        return instance.post(`/reset/${token.token}`, { password: token.password });
     }
 
     return { login, reset, changePassword };
