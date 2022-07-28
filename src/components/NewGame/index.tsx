@@ -97,7 +97,7 @@ const NewGame = () => {
   const dispatchCart = useAppDispatch();
   const bets = useAppSelector(state => state.cart.bets);
   const user = useAppSelector(state => state.auth);
-  const { listGames } = gamesService()
+  const { listGames } = gamesService();
 
   useEffect(() => {
 
@@ -163,11 +163,10 @@ const NewGame = () => {
         price: betsState.currentBet?.game?.price as number,
         type: betsState.currentBet?.game as Game,
       }
-      console.log(bet)
       dispatchCart(addBet(bet));
       dispatchBets({ type: 'CLEAR' });
       toast.success(`Aposta adicionada ao carrinho!
-      Números selecionados: ${currentBet?.numbersSelected.join(', ')}`)
+      Números selecionados: ${currentBet?.numbersSelected.join(', ')}`);
     } else {
       const maxNumber = parseInt(betsState.currentBet?.game?.max_number as string);
       const numbersLeft = maxNumber - (betsState.currentBet?.numbersSelected.length as number)

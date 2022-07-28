@@ -18,6 +18,7 @@ function RecentGames() {
   const [filters, setFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [gamesAvailable, setGamesAvailable] = useState<Game[]>([]);
+  const [noBets, setNoBets] = useState<boolean>(false);
   const token = useAppSelector(state => state.auth.token);
   const { listGames } = gamesService();
   const { listBet } = betsService();
@@ -34,6 +35,9 @@ function RecentGames() {
 
         setGamesAvailable(gamesResponse.types);
         setBets(betsResponse);
+        if (betsResponse.length === 0) {
+          setNoBets(true);
+        }
 
       } catch (e) {
         console.log('erro')
@@ -85,7 +89,7 @@ function RecentGames() {
       <header>
         <div>
           <h2>RECENT GAMES</h2>
-          {!isLoading && bets.length !== 0 && <div>
+          {!isLoading && !noBets && <div>
             <p>Filters</p>
             <div>
               {filterButtons}
@@ -96,8 +100,10 @@ function RecentGames() {
           <Link to='/new-game'><h3>New Bet<ArrowRight size={32} color='#B5C401' /></h3></Link>}
       </header>
       {!isLoading && bets.length !== 0 && <BetsList bets={bets} />}
-      {!isLoading && bets.length === 0 && <p>Não há apostas recentes. Que tal criar uma
+      {!isLoading && noBets && <p>Não há apostas recentes. Que tal criar uma
         <Link to='/new-game'> nova aposta</Link>?</p>}
+      {!isLoading && bets.length === 0 &&
+        <p>Não há apostas recentes desse{filters.length > 1 && 's'} jogo{filters.length > 1 && 's'}.</p>}
       {isLoading && <BeatLoader color='#B5C401' size={20} />}
       <Link to='/new-game'>
         {window.innerWidth <= 700 &&

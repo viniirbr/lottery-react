@@ -3,6 +3,7 @@ import styled from "styled-components";
 const RecentGamesWrapper = styled.section`
     display: flex;
     flex-direction: column;
+    gap: 30px;
     align-items: center;
     width: 100%;
     padding: 40px 20px;

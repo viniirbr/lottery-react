@@ -9,6 +9,7 @@ import { BeatLoader } from 'react-spinners'
 import { toast } from 'react-toastify'
 import betsService from 'shared/services/bets/index'
 import { convertToMonetaryValue } from 'shared/helpers'
+import { useNavigate } from "react-router-dom"
 
 interface Props {
   bets: Bet[],
@@ -25,6 +26,7 @@ function Cart({ bets, minCartValue }: Props) {
   const token = useAppSelector(state => state.auth.token);
   const dispatch = useAppDispatch();
   const { newBet } = betsService();
+  const navigate = useNavigate();
 
   if (bets.length !== 0) {
     const total = bets.map(bet => bet.price).reduce((acumulator, current) => acumulator + current);
@@ -43,6 +45,7 @@ function Cart({ bets, minCartValue }: Props) {
       dispatch(clearCart());
       toast.success(`Apostas salvas com sucesso!
       Valor total: ${totalFormated}`);
+      navigate('/');
 
     } catch (e) {
       toast.error("Ocorreu um erro ao salvar as apostas.")
