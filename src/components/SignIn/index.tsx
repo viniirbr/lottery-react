@@ -6,8 +6,7 @@ import { useAppDispatch } from "store/hooks";
 import { login } from "store/auth-slice";
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import signInSchema from "schemas/signInSchema";
-import { AxiosError } from "axios";
+import schema from './schema'
 import { toast } from 'react-toastify';
 import auth from '../../shared/services/auth'
 import { Token } from "shared/interfaces/AuthInterfaces";
@@ -21,7 +20,7 @@ const SignIn = () => {
 
     const [isLoading, setIsloading] = useState<boolean>(false);
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
-        resolver: yupResolver(signInSchema)
+        resolver: yupResolver(schema)
     });
 
     const dispatch = useAppDispatch();

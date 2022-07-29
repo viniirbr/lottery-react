@@ -25,7 +25,6 @@ function SendEmail({ goToChangePassword, setTokenToResetPassword }: Props) {
   const { reset } = auth();
 
   const handleSendEmail = async (data: FormData) => {
-    console.log('a')
     setIsLoading(true);
     const { email } = data;
     try {

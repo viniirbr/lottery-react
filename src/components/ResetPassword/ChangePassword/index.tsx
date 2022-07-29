@@ -31,6 +31,7 @@ function ChangePassword({ token }: Props) {
       const res = await changePassword({ token: token, password: data.password });
       console.log(res);
       navigate('/');
+      //TODO: INSERT TOAST HERE
     } catch (error: any) {
 
     } finally {

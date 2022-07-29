@@ -8,10 +8,10 @@ function PrivateRoutes() {
     return (
         <Routes>
             <Route path='/' element={<HomePage />}>
-              <Route index element={<RecentGames />} />
               <Route path='/new-game' element={<NewGame />} />
               <Route path='/account' element={<AccountInfo />} />
               <Route path='*' element={<p>Essa rota não existe</p>} />
+              <Route index element={<RecentGames />} />
             </Route>
         </Routes>
     )

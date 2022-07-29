@@ -19,7 +19,7 @@ function App() {
   const local = localStorage.getItem('token') || undefined;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
     if (local) {
       const token: Token = JSON.parse(local);
@@ -28,21 +28,13 @@ function App() {
     }
   }, []);
 
-  if (local) {
-    return (
-      <>
-        <ToastContainer />
-        <PrivateRoutes />
-      </>
-    )
-  }
-
   return (
     <>
       <ToastContainer />
-      <PublicRoutes />
+      {local ? <PrivateRoutes /> : <PublicRoutes />}
     </>
   )
+
 }
 
 export default App

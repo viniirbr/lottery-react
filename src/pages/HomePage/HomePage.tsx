@@ -1,5 +1,5 @@
 import { gamesService } from "shared/services";
-import { CartModal, Header } from 'components/index'
+import { CartModal, Header } from 'components'
 import { useEffect, useState } from "react"
 import { Outlet } from 'react-router-dom'
 import { setMinCartValue } from "store/cart-slice";

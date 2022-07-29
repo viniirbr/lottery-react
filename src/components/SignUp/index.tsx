@@ -37,7 +37,7 @@ const SignUp = () => {
       if (error.status === 400) {
         return toast.error("Email já existe.");
       }
-      toast.error('Ocorreu um erro. Verifique sua conexão.');
+      toast.error('Ocorreu um erro inesperado. Tente novamente mais tarde.');
     } finally {
       setIsloading(false);
     }
