@@ -11,8 +11,13 @@ const user = () => {
         return instance.post('/user/create', body);
     }
 
-    async function updateUser(body: IUpdateUserRequest): Promise<IUpdateUserResponse> {
-        return instance.put('/user/update', body);
+    async function updateUser(body: IUpdateUserRequest, token: string): Promise<IUpdateUserResponse> {
+        return instance.put('/user/update', body,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
     }
 
     async function getUserAccount(headers: AxiosRequestHeaders): Promise<IAccountResponse> {

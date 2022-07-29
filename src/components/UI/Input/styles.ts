@@ -1,7 +1,9 @@
 import styled, { CSSProperties } from "styled-components";
 
 interface Props {
-    styles?: CSSProperties
+    styles?: CSSProperties,
+    isEditing: boolean,
+    hasEditing: boolean | undefined
 }
 
 const InputWrapper = styled.div<Props>`
@@ -13,7 +15,14 @@ const InputWrapper = styled.div<Props>`
         display: none;
     }
 
-    & input {
+    & div {
+        display: flex;
+        align-items: center;
+    }
+
+    &  div input {
+        box-sizing: border-box;
+        width: 100%;
         font-family: 'Helvetica Neue', sans-serif;
         outline: none;
         border: none;
@@ -22,10 +31,16 @@ const InputWrapper = styled.div<Props>`
         font-weight: normal;
         font-size: 1rem;
         color: #707070;
+        border: ${props => props.isEditing && props.hasEditing && '1px solid #B5C401'};
+        cursor: ${props => !props.isEditing && 'inherit'};
     }
 
-    & input::placeholder {
+    & div input::placeholder {
         color: #9D9D9D;
+    }
+
+    svg {
+        cursor: pointer;
     }
 `
 

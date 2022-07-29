@@ -27,10 +27,7 @@ interface User {
 
 export interface IUpdateUserRequest {
     email?: string,
-    password?: string,
-    header: {
-        Authorization: string
-    }
+    name?: string,
 }
 
 export interface IUpdateUserResponse {

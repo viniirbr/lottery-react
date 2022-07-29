@@ -41,7 +41,7 @@ const Header: FC<Props> = ({ showCartModal }) => {
                     {pathname === '/' || <li><h2><Link to='/'>Home</Link></h2></li>}
                 </ul>
                 <ul>
-                    <li><h2><Link to='/'>Account</Link></h2></li>
+                    <li><h2><Link to='/account'>Account</Link></h2></li>
                     {window.innerWidth < 700 && <li onClick={() => showCartModal(true)}>
                         <ShoppingCart size={32} />
                         <span>{bets.length}</span></li>}
