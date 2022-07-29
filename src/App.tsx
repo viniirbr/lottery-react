@@ -1,17 +1,12 @@
-import InitialPage from 'pages/InitialPage/InitialPage'
 import './App.css'
-import { Routes, Route, useNavigate } from 'react-router-dom'
-import SignIn from 'components/SignIn'
-import SignUp from 'components/SignUp'
-import ResetPassword from 'components/ResetPassword'
-import HomePage from 'pages/HomePage/HomePage'
-import RecentGames from 'components/RecentGames'
-import NewGame from 'components/NewGame'
+import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from 'store/hooks'
 import { login } from 'store/auth-slice'
 import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
+import PublicRoutes from './routes/PublicRoutes'
+import PrivateRoutes from 'routes/PrivateRoutes'
 
 type Token = {
   type: string,
@@ -37,13 +32,7 @@ function App() {
     return (
       <>
         <ToastContainer />
-        <Routes>
-            <Route path='/' element={<HomePage />}>
-              <Route index element={<RecentGames />} />
-              <Route path='/new-game' element={<NewGame />} />
-              <Route path='*' element={<p>Essa rota não existe</p>} />
-            </Route>
-        </Routes>
+        <PrivateRoutes />
       </>
     )
   }
@@ -51,14 +40,7 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <Routes>
-          <Route path='/' element={<InitialPage />}>
-            <Route index element={<SignIn />} />
-            <Route path='/signup' element={<SignUp />} />
-            <Route path='/reset' element={<ResetPassword />} />
-            <Route path='*' element={<SignIn />} />
-          </Route>
-      </Routes>
+      <PublicRoutes />
     </>
   )
 }
