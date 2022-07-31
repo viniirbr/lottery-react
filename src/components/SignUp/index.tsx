@@ -61,7 +61,7 @@ const SignUp = () => {
           <Input
             label="Name"
             inputAttributes={{
-              type: 'name', id: 'name', placeholder: 'Name',
+              type: 'name', id: 'name', placeholder: 'Name', autoFocus: true,
               value: value, onChange: onChange, onBlur: onBlur
             }} />}
       />

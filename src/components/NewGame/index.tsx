@@ -57,7 +57,7 @@ function betsReducer(state: BetsState, action: BetsAction): BetsState {
     const currentBetGame = state.currentBet?.game;
     if (numbersSelected?.includes(clickedNumber as string)) {
       numbersSelected?.splice(numbersSelected.indexOf(clickedNumber), 1);
-    } else if (numbersSelected?.length as number < parseInt(currentBetGame?.max_number as string)) {
+    } else if (numbersSelected?.length as number < (currentBetGame?.max_number as number)) {
       state.currentBet?.numbersSelected.push(action.payload as string);
     } else {
       toast.warn(`Vocês já selecionou ${currentBetGame?.max_number} números, quantidade máxima para o` +
@@ -129,8 +129,8 @@ const NewGame = () => {
   function handleCompleteGame() {
     const gameNumbersList: string[] = [];
     const numbersSelected = betsState.currentBet?.numbersSelected as string[];
-    const maxNumber = parseInt(betsState.currentBet?.game?.max_number as string);
-    const range = parseInt(betsState.currentBet?.game?.range as string);
+    const maxNumber = betsState.currentBet?.game?.max_number as number;
+    const range = betsState.currentBet?.game?.range as number;
 
     for (let i = 1; i <= range; i++) {
       const numberString = i.toString();
@@ -157,7 +157,7 @@ const NewGame = () => {
     const { numbersSelected } = betsState.currentBet as CurrentBet;
     const { currentBet } = betsState;
 
-    if (numbersSelected.length === parseInt(currentBet?.game?.max_number as string)) {
+    if (numbersSelected.length === currentBet?.game?.max_number) {
       const bet: Bet = {
         choosen_numbers: betsState.currentBet?.numbersSelected
           .sort((a, b) => parseInt(a) - parseInt(b)).join(', ') as string,
@@ -171,7 +171,7 @@ const NewGame = () => {
       toast.success(`Aposta adicionada ao carrinho!
       Números selecionados: ${currentBet?.numbersSelected.join(', ')}`);
     } else {
-      const maxNumber = parseInt(betsState.currentBet?.game?.max_number as string);
+      const maxNumber = betsState.currentBet?.game?.max_number as number;
       const numbersLeft = maxNumber - (betsState.currentBet?.numbersSelected.length as number)
       toast.warn(`Você ainda não selecionou ${maxNumber} números. ` +
         `Ainda resta${numbersLeft > 1 ? 'm' : ''} ${numbersLeft} número${numbersLeft > 1 ? 's' : ''}.`, {
@@ -203,7 +203,7 @@ const NewGame = () => {
           <h3>Fill your bet</h3>
           <h4>{betsState.currentBet?.game?.description}</h4>
           <BallsSet
-            ballsCount={parseInt(betsState.currentBet?.game?.range as string)}
+            ballsCount={betsState.currentBet?.game?.range as number}
             ballsSelected={betsState.currentBet?.numbersSelected as string[]}
             onBallClicked={handleBallClicked}
             themeColor={betsState.currentBet?.game?.color} />

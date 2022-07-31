@@ -58,10 +58,17 @@ function RecentGames() {
     getFilteredBets();
 
     async function getFilteredBets() {
-      setIsLoadingBets(true);
-      const betsResponse = await listBet(token?.token as string, filters);
-      setBets(betsResponse);
-      setIsLoadingBets(false);
+      if (token) {
+        try {
+          setIsLoadingBets(true);
+          const betsResponse = await listBet(token?.token as string, filters);
+          setBets(betsResponse);
+        } catch (error: any) {
+
+        } finally {
+          setIsLoadingBets(false);
+        }
+      }
     }
 
   }, [filters, token])
@@ -103,7 +110,7 @@ function RecentGames() {
         {window.innerWidth > 700 &&
           <Link to='/new-game'><h3>New Bet<ArrowRight size={32} color='#B5C401' /></h3></Link>}
       </header>
-      {!isLoading && bets.length !== 0 && <BetsList bets={bets} isLoading={isLoadingBets}/>}
+      {!isLoading && bets.length !== 0 && <BetsList bets={bets} isLoading={isLoadingBets} />}
       {!isLoading && noBets && <p>Não há apostas recentes. Que tal criar uma
         <Link to='/new-game'> nova aposta</Link>?</p>}
       {!isLoading && bets.length === 0 &&

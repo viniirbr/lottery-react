@@ -6,6 +6,7 @@ import changePasswordSchema from "schemas/changePasswordSchema";
 import { useState } from "react";
 import { auth } from 'shared/services'
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify'
 
 interface FormData {
   password: string,
@@ -29,11 +30,9 @@ function ChangePassword({ token }: Props) {
     try {
       setIsLoading(true);
       const res = await changePassword({ token: token, password: data.password });
-      console.log(res);
       navigate('/');
-      //TODO: INSERT TOAST HERE
+      toast.success('Senha alterada com sucesso!');
     } catch (error: any) {
-
     } finally {
       setIsLoading(false);
     }

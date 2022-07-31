@@ -62,7 +62,7 @@ function SendEmail({ goToChangePassword, setTokenToResetPassword }: Props) {
           <Input
             label="Email"
             inputAttributes={{
-              type: 'email', id: 'email', placeholder: 'Email',
+              type: 'email', id: 'email', placeholder: 'Email', autoFocus: true,
               value: value, onChange: onChange, onBlur: onBlur
             }} />} />
       <p>{errors.email?.message}</p>

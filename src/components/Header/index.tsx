@@ -46,7 +46,7 @@ const Header: FC<Props> = ({ showCartModal }) => {
                         <ShoppingCart size={32} />
                         <span>{bets.length}</span></li>}
                     <li onClick={handleLogout}>{window.innerWidth < 700 ? <SignOut size={32}/>
-                        : <h2>Log out<ArrowRight size={20} /></h2>}</li>
+                        : <h2 id="logout">Log out<ArrowRight size={20} /></h2>}</li>
                 </ul>
             </nav>
         </HeaderWrapper>

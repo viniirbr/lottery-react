@@ -68,7 +68,7 @@ const SignIn = () => {
                         label="Email"
                         inputAttributes={{
                             type: 'email', id: 'email', placeholder: 'Email', value: value,
-                            onChange: onChange, onBlur: onBlur
+                            onChange: onChange, onBlur: onBlur, autoFocus: true
                         }}
                     />} />
             <p>{errors.email?.message}</p>
