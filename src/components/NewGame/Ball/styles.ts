@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 interface Props {
     color?: string,
-    active: boolean
+    active: boolean,
 }
 
 const BallWrapper = styled.p<Props>`

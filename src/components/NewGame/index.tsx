@@ -145,7 +145,7 @@ const NewGame = () => {
       return !numbersSelected.includes(number);
     });
 
-    for (let i = 0; i < maxNumber - numbersSelected.length; i++) {
+    for (let i = 0; i < maxNumber - numbersSelected?.length; i++) {
       const random = Math.floor(Math.random() * (numbersRemaining.length));
       dispatchBets({ type: 'NUMBER-SELECTED', payload: numbersRemaining[random] });
       numbersRemaining.splice(random, 1);
@@ -194,7 +194,8 @@ const NewGame = () => {
                 key={id}
                 themeColor={game.color}
                 attributes={{ onClick: () => handleGameTypeButtonClick(game) }}
-                selected={betsState.currentBet?.game?.type}>
+                selected={betsState.currentBet?.game?.type}
+                dataCy={`game-button-${game.type}`}>
                 {game.type}
               </Button>)}
           </div>
@@ -210,7 +211,7 @@ const NewGame = () => {
         </section>
         <div>
           <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
-            attributes={{ onClick: handleCompleteGame }}>
+            attributes={{ onClick: handleCompleteGame }} dataCy='complete-game'>
             Complete game
           </Button>
           <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
@@ -218,7 +219,7 @@ const NewGame = () => {
             Clear game
           </Button>
           <Button themeColor='#27C383' styles={{ borderRadius: '10px', borderWidth: '1px' }}
-            selected={true} attributes={{ onClick: handleAddToCart }}>
+            selected={true} attributes={{ onClick: handleAddToCart }} dataCy='add-to-cart'>
             <ShoppingCart size={20} weight='bold' /> Add to cart
           </Button>
 

@@ -7,10 +7,11 @@ interface Props {
   themeColor?: string,
   styles?: CSSProperties,
   selected?: boolean | string,
-  attributes?: ButtonHTMLAttributes<HTMLButtonElement>
+  attributes?: ButtonHTMLAttributes<HTMLButtonElement>,
+  dataCy?: string 
 }
 
-function Button({ children, themeColor, styles, selected, attributes }: Props) {
+function Button({ children, themeColor, styles, selected, attributes, dataCy }: Props) {
 
   return (
     <ButtonWrapper
@@ -18,6 +19,7 @@ function Button({ children, themeColor, styles, selected, attributes }: Props) {
       styles={styles}
       active={selected === children || selected == true}
       {...attributes}
+      data-cy={dataCy}
     >
       {children}
     </ButtonWrapper>

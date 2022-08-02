@@ -24,7 +24,7 @@ function BallsSet({ ballsCount, themeColor, onBallClicked, ballsSelected }: Prop
     }
 
     return (
-        <BallSetWrapper>{balls}</BallSetWrapper>
+        <BallSetWrapper data-cy='ballset'>{balls}</BallSetWrapper>
     )
 }
 

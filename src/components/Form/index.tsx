@@ -25,7 +25,7 @@ const Form: FC<Props> = ({ title, children, submitButtonTitle, exitButtonTitle, 
             <h2>{title}</h2>
             <Card hasShadow={true} styles={{ width: '100%', margin: '20px 0' }}>
                 {children}
-                <button type='submit'>{submitButtonTitle}{isLoading ? <BeatLoader color='#B5C401' size={15} />
+                <button type='submit' data-cy='submit'>{submitButtonTitle}{isLoading ? <BeatLoader color='#B5C401' size={15} />
                     : <ArrowRight color='#B5C401' size={32} />}</button>
             </Card>
             <h2><Link to={exitRoute}>

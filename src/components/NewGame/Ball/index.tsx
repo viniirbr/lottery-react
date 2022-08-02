@@ -8,11 +8,16 @@ interface Props {
 }
 
 function Ball({ children, color, ballsSelected, onBallClicked }: Props) {
+
+    const isActive = ballsSelected.includes(children);
+
     return (
         <BallWrapper
             color={color}
-            active={ballsSelected.includes(children)}
-            onClick={() => onBallClicked(children)}>
+            active={isActive}
+            onClick={() => onBallClicked(children)}
+            className={isActive ? 'active' : ''}
+            data-cy='ball'>
             {parseInt(children) < 10 ? `0${children}` : children}
         </BallWrapper>
     )

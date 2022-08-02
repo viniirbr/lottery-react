@@ -8,12 +8,9 @@ import { useAppSelector } from 'store/hooks';
 import { ArrowRight } from 'phosphor-react';
 import { BeatLoader } from 'react-spinners';
 import { Game } from 'shared/interfaces/GamesInterfaces';
-import { Bet, IListBetsResponse } from 'shared/interfaces/BetsInterfaces';
-import { Token } from 'shared/interfaces/AuthInterfaces';
-import axios from 'axios';
+import { Bet } from 'shared/interfaces/BetsInterfaces';
 
 function RecentGames() {
-
   const [bets, setBets] = useState<Bet[]>([]);
   const [filters, setFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -41,7 +38,6 @@ function RecentGames() {
         }
 
       } catch (e) {
-        console.log('erro')
       } finally {
         setIsLoading(false);
       }
@@ -108,7 +104,9 @@ function RecentGames() {
             </div>}
         </div>
         {window.innerWidth > 700 &&
-          <Link to='/new-game'><h3>New Bet<ArrowRight size={32} color='#B5C401' /></h3></Link>}
+          <Link to='/new-game' data-cy="new-bet">
+            <h3>New Bet<ArrowRight size={32} color='#B5C401' /></h3>
+          </Link>}
       </header>
       {!isLoading && bets.length !== 0 && <BetsList bets={bets} isLoading={isLoadingBets} />}
       {!isLoading && noBets && <p>Não há apostas recentes. Que tal criar uma

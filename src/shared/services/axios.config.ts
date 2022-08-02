@@ -22,7 +22,6 @@ instance.interceptors.request.use(async (config) => {
 });
 
 instance.interceptors.response.use(async (response) => {
-    console.log(response)
     return response.data;
 }, (error: AxiosError) => {
 

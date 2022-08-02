@@ -59,17 +59,17 @@ function Cart({ bets, minCartValue }: Props) {
     <CartWrapper>
       <main>
         <h3>CART</h3>
-        <ul>
+        <ul data-cy='cart-items-list'>
           {bets.length === 0 && <p>Não há apostas no carrinho</p>}
           {bets.length !== 0 && bets.map((bet, id) => <CartItem key={id} bet={bet} />)}
         </ul>
-          <h3>CART TOTAL: {totalFormated}</h3>
+          <h3 data-cy='cart-total'>CART TOTAL: {totalFormated}</h3>
         {bets.length !== 0 && !isMoreThanMinCartValue &&
           <p>{`The minimal cart value is ${minCartValueFormated}`}</p>}
       </main>
       {bets.length !== 0 &&
         <footer>
-          <button disabled={!isMoreThanMinCartValue} onClick={handleSaveGame}>
+          <button disabled={!isMoreThanMinCartValue} onClick={handleSaveGame} data-cy='cart-save'>
             Save
             {isLoading ? <BeatLoader color='#27C383' size={15} /> :
               <ArrowRight size={32} color={isMoreThanMinCartValue ? '#27C383' : '#707070'} />}

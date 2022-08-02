@@ -1,4 +1,4 @@
-import Bet from "shared/interfaces/Bet";
+import { Bet } from "shared/interfaces/BetsInterfaces";
 import { Trash, Check, X } from 'phosphor-react'
 import CartItemWrapper from "./styles";
 import { useState } from "react";
@@ -20,7 +20,7 @@ function CartItem({ bet }: Props) {
     }
 
     return (
-        <CartItemWrapper color={bet.type.color as string}>
+        <CartItemWrapper color={bet.type.color as string} data-cy='cart-item'>
 
             {confirmDelete ?
                 <span>
