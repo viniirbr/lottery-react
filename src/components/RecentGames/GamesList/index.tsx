@@ -10,7 +10,7 @@ interface Props {
 
 function BetsList({ bets, isLoading }: Props) {
   return (
-    <BetsListWrapper>
+    <BetsListWrapper data-cy='bets-list'>
       {!isLoading ?
         bets?.map((bet, id) => <BetItem key={id} bet={bet} />)
         :

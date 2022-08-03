@@ -85,7 +85,8 @@ function RecentGames() {
       key={id}
       themeColor={color}
       attributes={{ onClick: () => addFilter(type) }}
-      selected={filters.includes(type)}>
+      selected={filters.includes(type)}
+      dataCy={`filter-${type}`}>
       {type}
     </Button>);
 
@@ -94,11 +95,11 @@ function RecentGames() {
     <RecentGamesWrapper>
       <header>
         <div>
-          <h2>RECENT GAMES</h2>
+          <h2 data-cy='recent-games-title'>RECENT GAMES</h2>
           {!isLoading && !noBets &&
             <div>
               <p>Filters</p>
-              <div>
+              <div data-cy="filter-buttons">
                 {filterButtons}
               </div>
             </div>}
