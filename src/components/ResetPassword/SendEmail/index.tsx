@@ -2,7 +2,7 @@ import Form from "components/Form";
 import Input from "components/UI/Input";
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import sendEmailSchema from "schemas/sendEmailSchema";
+import schema from "components/ResetPassword/SendEmail/schema";
 import { useState } from "react";
 import { toast } from 'react-toastify'
 import { auth } from 'shared/services'
@@ -20,7 +20,7 @@ function SendEmail({ goToChangePassword, setTokenToResetPassword }: Props) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: yupResolver(sendEmailSchema)
+    resolver: yupResolver(schema)
   });
   const { reset } = auth();
 
@@ -65,7 +65,7 @@ function SendEmail({ goToChangePassword, setTokenToResetPassword }: Props) {
               type: 'email', id: 'email', placeholder: 'Email', autoFocus: true,
               value: value, onChange: onChange, onBlur: onBlur
             }} />} />
-      <p>{errors.email?.message}</p>
+      <p data-cy='error-message'>{errors.email?.message}</p>
     </Form>
   )
 }

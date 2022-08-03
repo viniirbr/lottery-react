@@ -22,16 +22,18 @@ const Form: FC<Props> = ({ title, children, submitButtonTitle, exitButtonTitle, 
 
     return (
         <FormWrapper className={className} onSubmit={handleSubmit} noValidate={true}>
-            <h2>{title}</h2>
+            <h2 data-cy="form-title">{title}</h2>
             <Card hasShadow={true} styles={{ width: '100%', margin: '20px 0' }}>
                 {children}
-                <button type='submit' data-cy='submit'>{submitButtonTitle}{isLoading ? <BeatLoader color='#B5C401' size={15} />
-                    : <ArrowRight color='#B5C401' size={32} />}</button>
+                <button type='submit' data-cy='submit' disabled={isLoading}>
+                    {submitButtonTitle}{isLoading ? <BeatLoader color='#B5C401' size={15} />
+                        : <ArrowRight color='#B5C401' size={32} />}
+                </button>
             </Card>
             <h2><Link to={exitRoute}>
-                {!exitRouteFoward && <ArrowLeft color='#707070' size={32}/>}
+                {!exitRouteFoward && <ArrowLeft color='#707070' size={32} />}
                 {exitButtonTitle}
-                {exitRouteFoward && <ArrowRight color='#707070' size={32}/>}
+                {exitRouteFoward && <ArrowRight color='#707070' size={32} />}
             </Link></h2>
         </FormWrapper>
     )

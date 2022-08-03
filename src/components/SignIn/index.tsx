@@ -71,7 +71,7 @@ const SignIn = () => {
                             onChange: onChange, onBlur: onBlur, autoFocus: true
                         }}
                     />} />
-            <p>{errors.email?.message}</p>
+            <p data-cy='error-message'>{errors.email?.message}</p>
 
             <Controller
                 name="password"
@@ -84,7 +84,7 @@ const SignIn = () => {
                             type: 'password', id: 'password', placeholder: 'Password', value: value,
                             onChange: onChange, onBlur: onBlur
                         }} />} />
-            <p>{errors.password?.message}</p>
+            <p data-cy='error-message'>{errors.password?.message}</p>
 
             <Link to={'/reset'}>I forgot my password</Link>
         </SignInWrapper>

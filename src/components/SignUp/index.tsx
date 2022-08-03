@@ -5,9 +5,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import signUpSchema from "schemas/signUpSchema";
+import schema from "components/SignUp/schema";
 import { toast } from "react-toastify";
-import { AxiosError } from "axios";
 
 type FormData = {
   name: string,
@@ -19,7 +18,7 @@ const SignUp = () => {
 
   const [isLoading, setIsloading] = useState<boolean>(false);
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: yupResolver(signUpSchema)
+    resolver: yupResolver(schema)
   });
   const navigate = useNavigate();
   const { createUser } = user();
@@ -65,7 +64,7 @@ const SignUp = () => {
               value: value, onChange: onChange, onBlur: onBlur
             }} />}
       />
-      <p>{errors.name?.message}</p>
+      <p data-cy='error-message'>{errors.name?.message}</p>
 
       <Controller
         control={control}
@@ -79,7 +78,7 @@ const SignUp = () => {
               value: value, onChange: onChange, onBlur: onBlur
             }} />}
       />
-      <p>{errors.email?.message}</p>
+      <p data-cy='error-message'>{errors.email?.message}</p>
 
       <Controller
         control={control}
@@ -93,7 +92,7 @@ const SignUp = () => {
               value: value, onChange: onChange, onBlur: onBlur
             }} />}
       />
-      <p>{errors.password?.message}</p>
+      <p data-cy='error-message'>{errors.password?.message}</p>
     </SignInWrapper>
   )
 }

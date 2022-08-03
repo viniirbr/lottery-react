@@ -2,7 +2,7 @@ import Form from "components/Form";
 import Input from "components/UI/Input";
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
-import changePasswordSchema from "schemas/changePasswordSchema";
+import schema from "components/ResetPassword/ChangePassword/schema";
 import { useState } from "react";
 import { auth } from 'shared/services'
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ function ChangePassword({ token }: Props) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: yupResolver(changePasswordSchema)
+    resolver: yupResolver(schema)
   });
   const { changePassword } = auth();
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ function ChangePassword({ token }: Props) {
               type: 'password', id: 'password', placeholder: 'Password',
               value: value, onChange: onChange, onBlur: onBlur
             }} />} />
-      <p>{errors.password?.message}</p>
+      <p data-cy='error-message'>{errors.password?.message}</p>
 
       <Controller
         name="confirmPassword"
@@ -73,7 +73,7 @@ function ChangePassword({ token }: Props) {
               type: 'password', id: 'confirmPassword', placeholder: 'Confirm Password',
               value: value, onChange: onChange, onBlur: onBlur
             }} />} />
-      <p>{errors.confirmPassword?.message}</p>
+      <p data-cy='error-message'>{errors.confirmPassword?.message}</p>
     </Form>
   )
 }
