@@ -1,36 +1,40 @@
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosError } from "axios";
 
 const instance = axios.create({
-    baseURL: 'http://127.0.0.1:3333/',
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
+  baseURL: "http://localhost:3333/",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
 });
 
-instance.interceptors.request.use(async (config) => {
-
-    const token = '';
+instance.interceptors.request.use(
+  async (config) => {
+    const token = "";
 
     if (token) {
-        config.headers!.Authorization = `Bearer ${token}`
+      config.headers!.Authorization = `Bearer ${token}`;
     }
 
     return config;
-}, (error: AxiosError) => {
+  },
+  (error: AxiosError) => {
     return Promise.reject(error);
-});
+  }
+);
 
-instance.interceptors.response.use(async (response) => {
+instance.interceptors.response.use(
+  async (response) => {
     return response.data;
-}, (error: AxiosError) => {
-
+  },
+  (error: AxiosError) => {
     if (error.response) {
-        const handledError = error.response;
-        return Promise.reject(handledError);
+      const handledError = error.response;
+      return Promise.reject(handledError);
     }
 
     return Promise.reject(error);
-});
+  }
+);
 
 export default instance;

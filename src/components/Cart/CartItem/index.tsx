@@ -1,43 +1,50 @@
 import { Bet } from "shared/interfaces/BetsInterfaces";
-import { Trash, Check, X } from 'phosphor-react'
+import { Trash, Check, X } from "phosphor-react";
 import CartItemWrapper from "./styles";
 import { useState } from "react";
 import { useAppDispatch } from "store/hooks";
 import { removeBet } from "store/cart-slice";
 
 interface Props {
-    bet: Bet
+  bet: Bet;
 }
 
 function CartItem({ bet }: Props) {
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
-    const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
-    const dispatch = useAppDispatch();
+  function deleteBet() {
+    dispatch(removeBet(bet));
+    setConfirmDelete(false);
+  }
+  return (
+    <CartItemWrapper
+      color={(bet as any).type.color as string}
+      data-cy="cart-item"
+    >
+      {confirmDelete ? (
+        <span>
+          <X size={20} onClick={() => setConfirmDelete(false)} />
+          <Check size={20} onClick={deleteBet} />
+        </span>
+      ) : (
+        <Trash size={32} onClick={() => setConfirmDelete(true)} />
+      )}
 
-    function deleteBet() {
-        dispatch(removeBet(bet));
-        setConfirmDelete(false);
-    }
-
-    return (
-        <CartItemWrapper color={bet.type.color as string} data-cy='cart-item'>
-
-            {confirmDelete ?
-                <span>
-                    <X size={20} onClick={() => setConfirmDelete(false)} />
-                    <Check size={20} onClick={deleteBet}/>
-                </span> :
-                <Trash size={32} onClick={() => setConfirmDelete(true)} />}
-
-            <div>
-                <h4>{bet.choosen_numbers}</h4>
-                <div>
-                    <h4>{bet.type.type}</h4>
-                    <p>{bet.price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
-                </div>
-            </div>
-        </CartItemWrapper>
-    )
+      <div>
+        <h4>{bet.chosen_numbers}</h4>
+        <div>
+          <h4>{(bet as any).type.type}</h4>
+          <p>
+            {(bet as any).type.price.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </p>
+        </div>
+      </div>
+    </CartItemWrapper>
+  );
 }
 
-export default CartItem
+export default CartItem;

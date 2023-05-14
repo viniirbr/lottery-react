@@ -1,25 +1,26 @@
-import { Game } from "./GamesInterfaces"
+import { Game } from "./GamesInterfaces";
 
-export type IListBetsResponse = Array<Bet>
+export type IListBetsResponse = Array<Bet>;
 
 export interface INewBetRequest {
-    games: Array<{ game_id: number, numbers: number[] }>
+  bets: Array<{ gameId: number; chosenNumbers: number[] }>;
 }
 
 export interface INewBetResponse {
-    bet: Bet[]
+  bet: Bet[];
 }
 
 export interface Bet {
-    id: number,
-    user_id?: number,
-    game_id: number,
-    choosen_numbers: string,
-    price: number,
-    created_at?: Date,
-    type: {
-        id: number,
-        type: string,
-        color?: string
-    }
+  id: number;
+  user_id?: number;
+  game_id: number;
+  chosen_numbers: string;
+  created_at?: Date;
+  price?: number;
+  game: {
+    id: number;
+    type: string;
+    color?: string;
+    price: number;
+  };
 }

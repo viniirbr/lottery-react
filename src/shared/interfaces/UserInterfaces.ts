@@ -56,7 +56,7 @@ export interface IAccountResponse {
 
 export interface Bet {
     id:              number;
-    choosen_numbers: string[];
+    chosen_numbers: string[];
     user_id:         number;
     game_id:         number;
     price:           number;
