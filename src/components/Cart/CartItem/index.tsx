@@ -18,10 +18,7 @@ function CartItem({ bet }: Props) {
     setConfirmDelete(false);
   }
   return (
-    <CartItemWrapper
-      color={(bet as any).type.color as string}
-      data-cy="cart-item"
-    >
+    <CartItemWrapper color={bet.game.color as string} data-cy="cart-item">
       {confirmDelete ? (
         <span>
           <X size={20} onClick={() => setConfirmDelete(false)} />
@@ -34,9 +31,9 @@ function CartItem({ bet }: Props) {
       <div>
         <h4>{bet.chosen_numbers}</h4>
         <div>
-          <h4>{(bet as any).type.type}</h4>
+          <h4>{bet.game.type}</h4>
           <p>
-            {(bet as any).type.price.toLocaleString("pt-br", {
+            {bet.game.price.toLocaleString("pt-br", {
               style: "currency",
               currency: "BRL",
             })}

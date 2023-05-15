@@ -21,7 +21,7 @@ export interface ICreateGameResponse {
 
 export interface IListGamesResponse {
   min_cart_value: number;
-  types: Game[];
+  games: Game[];
 }
 
 export interface Game extends ICreateGameResponse {

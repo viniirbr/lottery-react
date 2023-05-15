@@ -111,7 +111,7 @@ const NewGame = () => {
   useEffect(() => {
     const fetchGames = async () => {
       const response = await listGames();
-      setGamesAvailable(response.types);
+      setGamesAvailable(response.games);
     };
 
     fetchGames();
@@ -175,7 +175,7 @@ const NewGame = () => {
         game_id: betsState.currentBet?.game?.id as number,
         id: Math.floor(Math.random() * 500),
         price: betsState.currentBet?.game?.price as number,
-        type: betsState.currentBet?.game as Game,
+        game: betsState.currentBet?.game as Game,
       };
       dispatchCart(addBet(bet));
       dispatchBets({ type: "CLEAR" });
@@ -196,7 +196,6 @@ const NewGame = () => {
       );
     }
   }
-
 
   return (
     <NewGameWrapper>

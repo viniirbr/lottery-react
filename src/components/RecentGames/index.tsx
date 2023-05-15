@@ -29,7 +29,7 @@ function RecentGames() {
           listGames(),
         ]);
 
-        setGamesAvailable(gamesResponse.types);
+        setGamesAvailable(gamesResponse.games);
         setBets(betsResponse);
         if (betsResponse.length === 0) {
           setNoBets(true);
